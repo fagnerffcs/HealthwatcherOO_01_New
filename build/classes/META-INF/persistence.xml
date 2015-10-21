@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="healthwatcher" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.cin.ufpe.healthwatcher.model.Address</class>
+		<class>br.cin.ufpe.healthwatcher.model.AnimalComplaint</class>
+		<class>br.cin.ufpe.healthwatcher.model.Authorization</class>
+		<class>br.cin.ufpe.healthwatcher.model.Complaint</class>
+		<class>br.cin.ufpe.healthwatcher.model.Credential</class>
+		<class>br.cin.ufpe.healthwatcher.model.DiseaseType</class>
+		<class>br.cin.ufpe.healthwatcher.model.Employee</class>
+		<class>br.cin.ufpe.healthwatcher.model.FoodComplaint</class>
+		<class>br.cin.ufpe.healthwatcher.model.HealthUnit</class>
+		<class>br.cin.ufpe.healthwatcher.model.MedicalSpecialty</class>
+		<class>br.cin.ufpe.healthwatcher.model.Situation</class>
+		<class>br.cin.ufpe.healthwatcher.model.SpecialComplaint</class>
+		<class>br.cin.ufpe.healthwatcher.model.Symptom</class>
+		<properties>
+			<property name="hibernate.connection.username" value="healthwatcher" />
+			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
+			<property name="hibernate.connection.password" value="healthwatcher" />
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/healthwatcher" />
+			<property name="hibernate.connection.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="javax.persistence.sharedCache.mode" value="ALL"/>
+			<property name="format_sql" value="true" />
+		</properties>		
+	</persistence-unit>
+</persistence>

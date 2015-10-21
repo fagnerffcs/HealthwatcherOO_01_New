@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  <h1>Queries' Menu</h1>
+   	  <p>Choose any query below</p>
+   	  
+   	  <ul>
+   	  	<li>
+   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/searchSpecialtyByHealthUnit.jsf">
+   	  			Show medical specialties grouped by health units
+   	  		</h:outputLink>
+   	  	</li>
+   	  </ul>
+   	  <ul>
+   	  	<li>
+   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/searchHealthUnitBySpecialty.jsf">
+   	  			Show health units grouped by medical specialties
+   	  		</h:outputLink>
+   	  	</li>
+   	  </ul>
+   	  <ul>
+   	  	<li>
+   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/complaint/searchComplaints.jsf">
+   	  			Search complaints 
+   	  		</h:outputLink>
+   	  	</li>
+   	  </ul>   	  
+   	  <ul>   	     	  	
+   	  	<li>
+   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/disease/searchDiseases.jsf">
+   	  			Search disease type data
+   	  		</h:outputLink>
+   	  	</li>
+   	  </ul>
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	  </center>
+   </ui:define>
+</ui:composition>

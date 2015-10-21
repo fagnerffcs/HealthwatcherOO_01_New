@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  
+	  <h:form id="form" style="text-align: center; margin: 10px;" >
+  		  <h:messages id="messages" styleClass="messages" />
+		  <h4>Complaint : <h:outputText value="#{facade.searchComplaintController.complaint.codigo}" /></h4>
+		  <h4>Complaint kind: <h:outputText value="#{facade.searchComplaintController.complaintKind}" /> </h4>
+		  <h4>Description: <h:outputText value="#{facade.searchComplaintController.complaint.descricao}" /></h4>
+
+	  	  <h4>Observation (complaint's solution):</h4>
+	  	  <h:inputTextarea value="#{facade.searchComplaintController.complaint.observacao}" rols="4" cols="25"  />
+
+		  <div>
+			  <h:commandButton action="#{facade.searchComplaintController.updateComplaint}" value="Update" />
+			  <h:commandButton type="reset" value="Clear" />
+		  </div>
+	  </h:form>   	  
+
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/queriesMenu.jsf">
+	   	  	Queries' Menu
+	   	  </h:outputLink>
+   	  	  -   	  
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	   	  
+	  </center>
+   </ui:define>
+</ui:composition>

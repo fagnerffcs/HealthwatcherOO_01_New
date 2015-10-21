@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html">
+
+ 		Complaint code: <h:outputText value="#{facade.complaintController.foodComplaint.codigo}" />
+
+ 		<p>
+	 		Complaint Kind: <h:outputLabel value="Food" />
+	 	</p>
+ 		  	  	
+   	  	<p>
+   	  		Complainer: <h:outputLabel value="#{facade.complaintController.foodComplaint.solicitante}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		Email: <h:outputLabel value="#{facade.complaintController.foodComplaint.email}" />
+   	  	</p>
+
+   	  	<p>
+   	  		Complaint's description: <h:outputLabel value="#{facade.complaintController.foodComplaint.descricao}" />
+   	  	</p>
+   	  	
+   	  	<p>Observation:
+   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.observacao}" />
+   	  	</p>
+   	  	
+   	  	<p>Date: 
+	   	  	<h:outputText value="#{facade.complaintController.foodComplaint.dataQueixa}">
+	   	  		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	   	  	</h:outputText>
+	   	</p>
+   	  	
+   	  	<p>Status: <h:outputText value="#{facade.complaintController.foodComplaint.situacao}" /> </p>
+   	  	
+   	  	<p>
+	   	  	Complainer's address:
+	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.street}" />
+	   	  	,
+	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.neighbourhood}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.zip}" />
+   	  		City: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.city}" />
+   	  	</p>
+
+		<p>
+			Phone Number: <h:outputText value="#{facade.complaintController.foodComplaint.enderecoSolicitante.phone}" />
+		</p>
+		
+		<p>
+			Amount of people that ate the meal: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeComensais}" />
+		</p>
+		
+		<p>
+			Amount of sick people: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeDoentes}" />
+		</p>
+		
+		<p>
+			Amount of people checked into a hospital: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeInternacoes}" />
+		</p>		
+
+		<p>
+			Amount of deaths: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeObitos}" />
+		</p>
+
+		<p>
+			Place of medical care: <h:outputText value="#{facade.complaintController.foodComplaint.localAtendimento}" />
+		</p>
+
+		<p>
+			Suspicious meal: <h:outputText value="#{facade.complaintController.foodComplaint.refeicaoSuspeita}" />
+		</p>
+
+   	  	<p>
+	   	  	Person's sick address:
+	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.street}" />
+	   	  	,
+	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.neighbourhood}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.zip}" />
+   	  		City: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.city}" />
+   	  	</p>
+
+		<p>
+			Phone Number: <h:outputText value="#{facade.complaintController.foodComplaint.enderecoDoente.phone}" />
+		</p>				
+		
+</ui:composition>

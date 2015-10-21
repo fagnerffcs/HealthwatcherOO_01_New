@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+   	  <h1>Insert complaint</h1>
+   	  <p>Choose kind of complaint</p>
+   	  
+   	  <ul>
+   	  	<li>
+   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/complaint/foodComplaint/foodComplaint.jsf">
+   	  			Complaint related to food
+   	  		</h:outputLink>
+   	  	</li>
+   	  </ul>
+   	  <ul>   	     	  	
+   	  	<li>
+   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/complaint/animalComplaint/animalComplaint.jsf">
+   	  			Complaint related to animals
+   	  		</h:outputLink>
+   	  	</li>
+   	  </ul>
+   	  <ul>   	     	  	
+   	  	<li>
+   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/complaint/specialComplaint/specialComplaint.jsf">
+   	  			Other kind of complaint
+   	  		</h:outputLink>
+   	  	</li>
+   	  </ul>
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	  </center>
+   </ui:define>
+</ui:composition>

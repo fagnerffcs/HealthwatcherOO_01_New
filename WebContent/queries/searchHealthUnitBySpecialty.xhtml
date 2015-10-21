@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  <h1>Queries:</h1>
+	  <h1>Search Health units by Medical specialty</h1>
+   	  <p>Choose a specialty:</p>
+	  
+	  <h:form>
+	  	 <h:panelGrid columns="1">
+			  <h:selectOneMenu value="#{facade.medicalSpecialtyController.selectedMedicalSpecialty}" converter="#{medicalSpecialtyConverter}">
+			  	<f:selectItems value="#{facade.medicalSpecialtyController.specialtiesList}" var="ms" itemValue="#{ms}" itemLabel="#{ms.description}" />
+			  </h:selectOneMenu>
+			
+			  <h:commandButton action="#{facade.medicalSpecialtyController.searchHealthUnits()}" value="Consultar" />
+			  
+			  <h:messages id="messages" styleClass="messages" />
+		  </h:panelGrid>  
+	  </h:form>   	  
+
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/queriesMenu.jsf">
+	   	  	Queries' Menu
+	   	  </h:outputLink>
+   	  	  -   	  
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	   	  
+	  </center>
+   </ui:define>
+</ui:composition>

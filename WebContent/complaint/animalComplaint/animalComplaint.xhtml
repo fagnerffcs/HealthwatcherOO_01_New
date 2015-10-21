@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+   	  <h1>Animal Complaint</h1>
+   	  <h:form method="post">
+		<h:messages id="messages" styleClass="messages" />
+   	  	<p>Complaint Description</p>
+   	  	<h:inputTextarea value="#{facade.animalComplaintController.animalComplaint.descricao}" rows="4" cols="50" />
+
+   	  	<p>Observations</p>
+   	  	<h:inputTextarea value="#{facade.animalComplaintController.animalComplaint.observacao}" rows="2" cols="50" />
+   	  	
+   	  	<h3>Complainer Data</h3>
+		<p>Complainer name:
+		   <h:inputText value="#{facade.animalComplaintController.animalComplaint.solicitante}" />
+		</p>
+		<div>
+			Address: 
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.enderecoSolicitante.street}" />
+			
+			Complement:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.enderecoSolicitante.complement}" />
+		</div>
+		<p>
+			Province:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.enderecoSolicitante.neighbourhood}" />
+		</p>
+		
+		<p>
+			City:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.enderecoSolicitante.city}" />
+			
+			State:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.enderecoSolicitante.state}" />
+			
+			ZIP Code:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.enderecoSolicitante.zip}" />			
+		</p>
+		<p>
+			Phone Number:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.enderecoSolicitante.phone}" />
+		</p>
+		<p>
+			E-mail:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.email}" />
+		</p>
+		
+		<h3>Animal Data</h3>
+		<p>
+			Animal Race:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.animal}" />
+			
+			Quantity:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.animalQuantity}" />
+		</p>
+		<p>
+			Event Date:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.inconvenienceDate}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:inputText>
+		</p>
+		<p>
+			Event Address:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.occurenceLocalAddress.street}" />
+			Complement:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.occurenceLocalAddress.complement}" />			
+		</p>
+		<p>
+			Province:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.occurenceLocalAddress.neighbourhood}" />
+		</p>
+		<p>
+			City:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.occurenceLocalAddress.city}" />
+			
+			State:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.occurenceLocalAddress.state}" />
+			
+			ZIP Code:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.occurenceLocalAddress.zip}" />			
+		</p>
+		<p>
+			Phone number:
+			<h:inputText value="#{facade.animalComplaintController.animalComplaint.occurenceLocalAddress.phone}" />
+		</p>
+		
+		<h:commandButton style="margin: 10px;" value="Insert" action="#{facade.animalComplaintController.salvar()}" />
+		<h:commandButton type="reset" value="Clear" />
+   	  </h:form>
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	  </center>
+   </ui:define>
+</ui:composition>

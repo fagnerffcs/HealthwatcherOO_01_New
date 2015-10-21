@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html">
+
+ 		Complaint code: <h:outputText value="#{facade.complaintController.specialComplaint.codigo}" />
+
+ 		<p>
+	 		Complaint Kind: <h:outputLabel value="Special" />
+	 	</p>
+ 		  	  	
+   	  	<p>
+   	  		Complainer: <h:outputLabel value="#{facade.complaintController.specialComplaint.solicitante}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		Email: <h:outputLabel value="#{facade.complaintController.specialComplaint.email}" />
+   	  	</p>
+
+   	  	<p>
+   	  		Complaint's description: <h:outputLabel value="#{facade.complaintController.specialComplaint.descricao}" />
+   	  	</p>
+   	  	
+   	  	<p>Observation:
+   	  	<h:outputLabel value="#{facade.complaintController.specialComplaint.observacao}" />
+   	  	</p>
+   	  	
+   	  	<p>Date: 
+	   	  	<h:outputText value="#{facade.complaintController.specialComplaint.dataQueixa}">
+	   	  		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	   	  	</h:outputText>
+	   	</p>
+   	  	
+   	  	<p>Status: <h:outputText value="#{facade.complaintController.specialComplaint.situacao}" /> </p>
+   	  	
+   	  	<p>
+	   	  	Complainer's address:
+	   	  	<h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoSolicitante.street}" />
+	   	  	,
+	   	  	<h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoSolicitante.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoSolicitante.neighbourhood}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoSolicitante.zip}" />
+   	  		City: <h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoSolicitante.city}" />
+   	  	</p>
+
+		<p>
+			Phone Number: <h:outputText value="#{facade.complaintController.specialComplaint.enderecoSolicitante.phone}" />
+		</p>
+		
+		<p>
+			Years old: <h:outputText value="#{facade.complaintController.specialComplaint.idade}" />
+		</p>
+		
+		<p>
+			School level: <h:outputText value="#{facade.complaintController.specialComplaint.instrucao}" />
+		</p>
+		
+		<p>
+			Occupation: <h:outputText value="#{facade.complaintController.specialComplaint.ocupacao}" />
+		</p>		
+
+   	  	<p>
+	   	  	Person's sick address:
+	   	  	<h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoOcorrencia.street}" />
+	   	  	,
+	   	  	<h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoOcorrencia.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoOcorrencia.neighbourhood}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoOcorrencia.zip}" />
+   	  		City: <h:outputLabel value="#{facade.complaintController.specialComplaint.enderecoOcorrencia.city}" />
+   	  	</p>
+
+		<p>
+			Phone Number: <h:outputText value="#{facade.complaintController.specialComplaint.enderecoOcorrencia.phone}" />
+		</p>				
+		
+</ui:composition>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+   	  <h:form>
+	  	  <center><p style="font-size: 16px">Operation executed</p></center>
+	  	  <h:outputText style="text-align: center;" value="Health Unit updated" />
+	  	  
+	   	  <center>
+		   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/menuEmployee.jsf">
+		   	  	Employee's Menu
+		   	  </h:outputLink>
+	   	  	  -
+		   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+		   	  	Main Menu
+		   	  </h:outputLink>
+		  </center>		
+	  </h:form>
+   </ui:define>
+</ui:composition>

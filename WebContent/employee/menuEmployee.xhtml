@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  <h1>Menu Employee</h1>
+
+   	  <h:form>
+	   	  <ul>
+	   	  	<li>
+	   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/searchComplaint.jsf">
+	   	  			Update complaint
+	   	  		</h:outputLink>
+	   	  	</li>
+	   	  </ul>
+	   	  <ul>
+	   	  	<li>
+	   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/newEmployee.jsf">
+	   	  			Insert new employee
+	   	  		</h:outputLink>
+	   	  	</li>
+	   	  </ul>
+	   	  <ul>
+	   	  	<li>
+	   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/updateEmployee.jsf">
+	   	  			Update employee 
+	   	  			<f:param name="employee" value="#{facade.employeeLogin.employee.login}" />
+	   	  		</h:outputLink>
+	   	  		(change password)
+	   	  	</li>
+	   	  </ul>   	  
+	   	  <ul>
+	   	  	<li>
+	   	  		<h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/searchHealthUnitData.jsf">
+	   	  			Change health unit data
+	   	  		</h:outputLink>
+	   	  	</li>
+	   	  </ul>
+	   	  <ul>
+	   	  	<li>
+	   	  		<h:outputLink>
+	   	  			<h:commandLink action="#{facade.employeeLogin.changeLoggedUser()}" value="Change logged employee" />
+	   	  		</h:outputLink>
+	   	  	</li>
+	   	  </ul>	   	  
+	   	  <center>
+		   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+		   	  	Main Menu
+		   	  </h:outputLink>
+			  <h:outputLink style="margin-left: 5px;" title="Sair">
+				<h:commandLink action="#{facade.employeeLogin.logout()}" value="Sair" />
+			  </h:outputLink>
+		  </center>
+	 </h:form>
+   </ui:define>
+</ui:composition>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   
+   <ui:define name="content">
+   	  <div class="divInsertedFoodComplaint">
+   	  	Complaint inserted
+   	  </div>
+   	  <h2>Food Complaint inserted</h2>
+   	  
+   	  <h:form method="post">
+		<h2>Save the complaint number: <h:outputText value="#{flash.codigo}" /> </h2>
+   	  </h:form>
+   	  
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	  </center>
+   </ui:define>
+</ui:composition>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  
+	  <h:form id="form" style="text-align: center; margin: 10px;" >
+  		  <h:messages id="messages" styleClass="messages" />
+		  <div style="margin-bottom: 20px; font-size: 16px;">
+			  <h:outputText value="Operation executed" />
+		  </div>
+		  <div>
+			  <h:outputText value="Complaint updated" />
+		  </div>
+		  <div style="margin-top: 20px; text-align: left;">
+			  <h:outputText value="#{facade.searchComplaintController.complaint.observacao}" />
+		  </div>
+	  </h:form>   	  
+
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/menuEmployee.jsf">
+	   	  	Employee's menu
+	   	  </h:outputLink>
+   	  	  -   	  
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	   	  
+	  </center>
+   </ui:define>
+</ui:composition>

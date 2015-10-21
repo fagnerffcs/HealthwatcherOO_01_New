@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  <h1>
+	  	Update Health unit:
+	  </h1>
+	  <p>
+	  	Unit: <h:outputText value="#{healthUnitEdit.selectedHealthUnit.code}" />
+	  </p>
+	  
+	  <f:metadata>
+	  	<f:viewParam name="healthUnit" value="#{healthUnitEdit.selectedHealthUnit}" converter="#{healthUnitConverter}" />
+	  </f:metadata>
+	  
+   	  <h:form>
+	  	  <h:panelGrid>
+		  	  <h:outputLabel style="text-align: center;" value="Name:" />
+		  	  <h:inputText size="60" value="#{healthUnitEdit.selectedHealthUnit.description}" />
+	  	  </h:panelGrid>
+
+	  	  <h:commandButton action="#{healthUnitEdit.atualizar()}" value="Update" />
+ 	  	  <h:commandButton type="reset" value="Clear" />
+	  	
+	   	  <center>
+		   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/menuEmployee.jsf">
+		   	  	Employee's Menu
+		   	  </h:outputLink>
+	   	  	  -
+		   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+		   	  	Main Menu
+		   	  </h:outputLink>
+		  </center>		
+	  </h:form>
+   </ui:define>
+</ui:composition>

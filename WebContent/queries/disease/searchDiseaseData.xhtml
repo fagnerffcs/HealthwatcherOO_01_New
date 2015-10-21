@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  
+	  <h:form id="form">
+		  <h1>Querie result</h1>
+		  <h1>Disease</h1>
+
+		  <h2>
+		  	Name: <h:outputLabel value="#{facade.diseaseController.selectedDiseaseType.name}" />
+		  </h2>
+		  
+		  <p>
+		  	Description: <h:outputLabel value="#{facade.diseaseController.selectedDiseaseType.description}" />
+		  </p>
+		  
+		  <p>
+		  	How manifests: <h:outputLabel value="#{facade.diseaseController.selectedDiseaseType.manifestation}" />
+		  </p>		  
+
+		  <p>
+		  	Duration: <h:outputLabel value="#{facade.diseaseController.selectedDiseaseType.duration}" />
+		  </p>
+			
+		  <p>
+		  	Symptoms:
+		  </p>
+		  
+		  <h:dataTable value="#{facade.diseaseController.selectedDiseaseType.symptoms}" var="symptom">
+		  	<h:column>
+		  		<h:outputText value="#{symptom.description}" />
+		  	</h:column>
+		  </h:dataTable>
+
+		  <h:messages id="messages" styleClass="messages" />
+	  </h:form>   	  
+
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/queriesMenu.jsf">
+	   	  	Queries' Menu
+	   	  </h:outputLink>
+   	  	  -   	  
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	   	  
+	  </center>
+   </ui:define>
+</ui:composition>

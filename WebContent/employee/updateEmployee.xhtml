@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+   
+	  <f:metadata>
+	  	<f:viewParam name="employee" value="#{employeeEdit.employee}" converter="#{employeeConverter}" />
+	  </f:metadata>   
+   
+   	  <h1>Update Employee</h1>
+   
+	  <h:form method="post">
+		<h:panelGrid columns="2" cellpadding="5">
+		    <h:outputLabel value="Login:" />
+		    <h:outputLabel value="#{employeeEdit.employee.login}" />
+		    
+		    <h:outputLabel for="username" value="Name: * " />  
+		    <h:inputText id="username" value="#{employeeEdit.employee.name}" required="true" requiredMessage="Campo obrigatório." />
+
+		    <h:outputLabel for="newPass" value="New Password: * " />  
+		    <h:inputSecret id="newPass" value="#{employeeEdit.newPassword}" required="true" requiredMessage="Campo obrigatório." />
+		      
+		    <h:outputLabel for="newPassConfirm" value="Repeat new password: * " requiredMessage="Campo obrigatório." />  
+		    <h:inputSecret id="newPassConfirm" value="#{employeeEdit.newPasswordConfirm}" required="true" requiredMessage="Campo obrigatório." />
+		    
+		    <h:outputLabel for="currentPass" value="Current password: * " requiredMessage="Campo obrigatório." />  
+		    <h:inputSecret id="currentPass" value="#{employeeEdit.currentPassword}" required="true" requiredMessage="Campo obrigatório." />  		      
+
+			<h:commandButton value="Update" action="#{employeeEdit.atualizar()}" />
+			<h:commandButton type="reset" value="Clear" />
+		</h:panelGrid>	
+	  </h:form>
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/employee/menuEmployee.jsf">
+	   	  	Employee's Menu
+	   	  </h:outputLink>
+   	  	  -
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	  </center>		
+   </ui:define>
+</ui:composition>

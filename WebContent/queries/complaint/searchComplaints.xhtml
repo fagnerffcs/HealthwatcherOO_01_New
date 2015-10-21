@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  <h1>Query:</h1>
+	  <h1>Complaint data</h1>
+	  
+	  <h:form>
+	  	  <h:outputLabel value="Fill in complaint code:" style="font-weight: bold;" />
+		  <h:inputText style="margin-left: 5px;" value="#{facade.complaintController.complaintCode}" />
+			
+		  <h:commandButton style="margin: 10px;" action="#{facade.complaintController.searchComplaint()}" value="Search" />
+		  <h:commandButton type="reset" value="Clear" />
+		  
+		  <h:messages id="messages" styleClass="messages" />
+	  </h:form>   	  
+
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/queries/queriesMenu.jsf">
+	   	  	Queries' Menu
+	   	  </h:outputLink>
+   	  	  -   	  
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	   	  
+	  </center>
+   </ui:define>
+</ui:composition>

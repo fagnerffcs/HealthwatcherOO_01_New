@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html">
+
+ 		Complaint code: <h:outputText value="#{facade.complaintController.animalComplaint.codigo}" />
+
+ 		<p>
+	 		Complaint Kind: <h:outputLabel value="Animal" />
+	 	</p>
+ 		  	  	
+   	  	<p>
+   	  		Complainer: <h:outputLabel value="#{facade.complaintController.animalComplaint.solicitante}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		Email: <h:outputLabel value="#{facade.complaintController.animalComplaint.email}" />
+   	  	</p>
+
+   	  	<p>
+   	  		Complaint's description: <h:outputLabel value="#{facade.complaintController.animalComplaint.descricao}" />
+   	  	</p>
+   	  	
+   	  	<p>Observation:
+   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.observacao}" />
+   	  	</p>
+   	  	
+   	  	<p>Date: 
+	   	  	<h:outputText value="#{facade.complaintController.animalComplaint.dataQueixa}">
+	   	  		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	   	  	</h:outputText>
+	   	</p>
+   	  	
+   	  	<p>Status: <h:outputText value="#{facade.complaintController.animalComplaint.situacao}" /> </p>
+   	  	
+   	  	<p>
+	   	  	Complainer's address:
+	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.street}" />
+	   	  	,
+	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.neighbourhood}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.zip}" />
+   	  		City: <h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.city}" />
+   	  	</p>
+
+		<p>
+			Phone Number: <h:outputText value="#{facade.complaintController.animalComplaint.enderecoSolicitante.phone}" />
+		</p>
+		
+		<p>
+			Animal: <h:outputText value="#{facade.complaintController.animalComplaint.animal}" />
+		</p>
+		
+		<p>
+			Amount of animals: <h:outputText value="#{facade.complaintController.animalComplaint.animalQuantity}" />
+		</p>
+		
+		<p>
+			Date:
+			<h:outputText value="#{facade.complaintController.animalComplaint.dataQueixa}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p>
+
+   	  	<p>
+	   	  	Person's sick address:
+	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.street}" />
+	   	  	,
+	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.neighbourhood}" />
+   	  	</p>
+   	  	
+   	  	<p>
+   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.zip}" />
+   	  		City: <h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.city}" />
+   	  	</p>
+
+		<p>
+			Phone Number: <h:outputText value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.phone}" />
+		</p>
+		
+</ui:composition>
