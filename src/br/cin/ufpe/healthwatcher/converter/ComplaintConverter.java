@@ -6,7 +6,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import br.cin.ufpe.healthwatcher.model.Complaint;
+import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
 import br.cin.ufpe.healthwatcher.service.AnimalComplaintService;
 import br.cin.ufpe.healthwatcher.service.FoodComplaintService;
 import br.cin.ufpe.healthwatcher.service.SpecialComplaintService;

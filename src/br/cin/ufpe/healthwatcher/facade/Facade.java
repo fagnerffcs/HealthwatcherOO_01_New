@@ -5,16 +5,16 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.cin.ufpe.healthwatcher.controller.AnimalComplaintController;
-import br.cin.ufpe.healthwatcher.controller.ComplaintController;
-import br.cin.ufpe.healthwatcher.controller.DiseaseController;
-import br.cin.ufpe.healthwatcher.controller.EmployeeController;
-import br.cin.ufpe.healthwatcher.controller.EmployeeLogin;
-import br.cin.ufpe.healthwatcher.controller.FoodComplaintController;
-import br.cin.ufpe.healthwatcher.controller.HealthUnitController;
-import br.cin.ufpe.healthwatcher.controller.MedicalSpecialtyController;
-import br.cin.ufpe.healthwatcher.controller.SearchComplaintController;
-import br.cin.ufpe.healthwatcher.controller.SpecialComplaintController;
+import br.cin.ufpe.healthwatcher.business.AnimalComplaintController;
+import br.cin.ufpe.healthwatcher.business.ComplaintController;
+import br.cin.ufpe.healthwatcher.business.DiseaseController;
+import br.cin.ufpe.healthwatcher.business.EmployeeController;
+import br.cin.ufpe.healthwatcher.business.EmployeeLogin;
+import br.cin.ufpe.healthwatcher.business.FoodComplaintController;
+import br.cin.ufpe.healthwatcher.business.HealthUnitController;
+import br.cin.ufpe.healthwatcher.business.MedicalSpecialtyController;
+import br.cin.ufpe.healthwatcher.business.SearchComplaintController;
+import br.cin.ufpe.healthwatcher.business.SpecialComplaintController;
 
 @ManagedBean
 @SessionScoped

@@ -6,8 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
-import br.cin.ufpe.healthwatcher.model.HealthUnit;
-import br.cin.ufpe.healthwatcher.model.MedicalSpecialty;
+import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
+import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class HealthUnitService implements Serializable {

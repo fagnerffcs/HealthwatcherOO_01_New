@@ -8,7 +8,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import br.cin.ufpe.healthwatcher.model.DiseaseType;
+import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 import br.cin.ufpe.healthwatcher.service.DiseaseTypeService;
 
 @ManagedBean

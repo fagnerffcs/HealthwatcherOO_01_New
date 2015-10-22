@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
-import br.cin.ufpe.healthwatcher.model.DiseaseType;
+import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class DiseaseTypeService implements Serializable {

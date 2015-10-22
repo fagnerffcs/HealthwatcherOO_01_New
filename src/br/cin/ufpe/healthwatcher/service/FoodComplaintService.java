@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.cin.ufpe.healthwatcher.controller.EmployeeLogin;
+import br.cin.ufpe.healthwatcher.business.EmployeeLogin;
 import br.cin.ufpe.healthwatcher.facade.Facade;
-import br.cin.ufpe.healthwatcher.model.FoodComplaint;
-import br.cin.ufpe.healthwatcher.model.Situacao;
+import br.cin.ufpe.healthwatcher.model.complaint.FoodComplaint;
+import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
 import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class FoodComplaintService implements Serializable {

@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.cin.ufpe.healthwatcher.controller.EmployeeLogin;
-import br.cin.ufpe.healthwatcher.model.AnimalComplaint;
-import br.cin.ufpe.healthwatcher.model.Situacao;
+import br.cin.ufpe.healthwatcher.business.EmployeeLogin;
+import br.cin.ufpe.healthwatcher.model.complaint.AnimalComplaint;
+import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
 import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class AnimalComplaintService implements Serializable {

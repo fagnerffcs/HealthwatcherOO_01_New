@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.cin.ufpe.healthwatcher.model.MedicalSpecialty;
+import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class MedicalSpecialtyService implements Serializable {

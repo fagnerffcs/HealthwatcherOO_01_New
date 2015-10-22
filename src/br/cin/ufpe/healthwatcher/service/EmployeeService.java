@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.cin.ufpe.healthwatcher.exception.EmployeeAlreadyExistsException;
-import br.cin.ufpe.healthwatcher.model.Employee;
+import br.cin.ufpe.healthwatcher.model.employee.Employee;
 import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class EmployeeService implements Serializable {
