@@ -8,8 +8,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+import br.cin.ufpe.healthwatcher.data.rdb.SpecialtyRepositoryRDB;
 import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
-import br.cin.ufpe.healthwatcher.service.MedicalSpecialtyService;
 
 @ManagedBean
 @SessionScoped
@@ -17,12 +17,12 @@ public class MedicalSpecialtyConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 391558762793887877L;
 	
-	private MedicalSpecialtyService medicalSpecialtyService = new MedicalSpecialtyService();
+	private SpecialtyRepositoryRDB specialtyRepositoryRDB = new SpecialtyRepositoryRDB();
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,	String value) {
 		if(value!=null){
-			MedicalSpecialty ms = medicalSpecialtyService.find(Integer.parseInt(value));
+			MedicalSpecialty ms = specialtyRepositoryRDB.find(Integer.parseInt(value));
 			return ms;
 		} else {
 			return null;

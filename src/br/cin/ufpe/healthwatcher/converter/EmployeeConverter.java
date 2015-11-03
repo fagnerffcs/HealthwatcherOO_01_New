@@ -7,10 +7,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.inject.Inject;
 
+import br.cin.ufpe.healthwatcher.data.rdb.EmployeeRepositoryRDB;
 import br.cin.ufpe.healthwatcher.model.employee.Employee;
-import br.cin.ufpe.healthwatcher.service.EmployeeService;
 
 @ManagedBean
 @SessionScoped
@@ -18,8 +17,7 @@ public class EmployeeConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 391558762793887877L;
 	
-	@Inject
-	private EmployeeService employeeService;
+	private EmployeeRepositoryRDB employeeService = new EmployeeRepositoryRDB();
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,	String value) {

@@ -11,8 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.cin.ufpe.healthwatcher.facade.Facade;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 
+//TODO: rever a logica dessa classe apos o refactor
 public class LoginFilter implements Filter {
 
 	@Override
@@ -27,10 +28,10 @@ public class LoginFilter implements Filter {
 		
 		String url = req.getRequestURI();
 		
-		Facade fachada = (Facade) req.getSession().getAttribute("facade");
+		HealthWatcherFacade fachada = (HealthWatcherFacade) req.getSession().getAttribute("facade");
 		
-		//se não tiver logado 
-		if(fachada == null || fachada.getEmployeeLogin() == null || !fachada.getEmployeeLogin().isLogged()){
+		//se nao tiver logado 
+		if(fachada == null){
 			if(url.indexOf("/employee/") >= 0){
 				res.sendRedirect(req.getServletContext().getContextPath()+"/login.jsf");
 			} else {
@@ -39,9 +40,9 @@ public class LoginFilter implements Filter {
 		} else {
 			String login = (String) req.getSession().getAttribute("login");
 			if(login==null){
-				req.getSession().setAttribute("login", fachada.getEmployeeLogin().getEmployee().getLogin());
+				req.getSession().setAttribute("login", login);
 			}
-			if(fachada.getEmployeeLogin().isLogged() && url.indexOf("login.jsf") >= 0){
+			if(url.indexOf("login.jsf") >= 0){
 				res.sendRedirect(req.getServletContext().getContextPath()+"/employee/menuEmployee.jsf");
 			} else {
 				chain.doFilter(request, response);

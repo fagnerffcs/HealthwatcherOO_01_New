@@ -8,8 +8,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+import br.cin.ufpe.healthwatcher.data.rdb.DiseaseTypeRepositoryRDB;
 import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
-import br.cin.ufpe.healthwatcher.service.DiseaseTypeService;
 
 @ManagedBean
 @RequestScoped
@@ -17,12 +17,12 @@ public class DiseaseTypeConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 391558762793887877L;
 	
-	private DiseaseTypeService diseaseTypeService = new DiseaseTypeService();
+	private DiseaseTypeRepositoryRDB diseaseTypeRepositoryRDB = new DiseaseTypeRepositoryRDB();
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,	String value) {
 		if(value!=null){
-			DiseaseType diseaseType = diseaseTypeService.find(value);
+			DiseaseType diseaseType = diseaseTypeRepositoryRDB.find(value);
 			return diseaseType;
 		} else {
 			return null;

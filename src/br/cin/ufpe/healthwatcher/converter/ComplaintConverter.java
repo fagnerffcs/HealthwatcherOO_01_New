@@ -6,20 +6,20 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+import br.cin.ufpe.healthwatcher.data.rdb.AnimalComplaintRepositoryRDB;
+import br.cin.ufpe.healthwatcher.data.rdb.FoodComplaintRepositoryRDB;
+import br.cin.ufpe.healthwatcher.data.rdb.SpecialComplaintRepositoryRDB;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
-import br.cin.ufpe.healthwatcher.service.AnimalComplaintService;
-import br.cin.ufpe.healthwatcher.service.FoodComplaintService;
-import br.cin.ufpe.healthwatcher.service.SpecialComplaintService;
 
 @ManagedBean
 @RequestScoped
 public class ComplaintConverter implements Converter {
 	
-	private FoodComplaintService foodComplaintService = new FoodComplaintService();
+	private FoodComplaintRepositoryRDB foodComplaintService = new FoodComplaintRepositoryRDB();
 	
-	private AnimalComplaintService animalComplaintService = new AnimalComplaintService();
+	private AnimalComplaintRepositoryRDB animalComplaintService = new AnimalComplaintRepositoryRDB();
 	
-	private SpecialComplaintService specialComplaintService = new SpecialComplaintService();
+	private SpecialComplaintRepositoryRDB specialComplaintRepositoryRDB = new SpecialComplaintRepositoryRDB();
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,	String value) {
@@ -29,7 +29,7 @@ public class ComplaintConverter implements Converter {
 				complaint = animalComplaintService.find(Integer.parseInt(value));
 			}
 			if(complaint==null){
-				complaint = specialComplaintService.find(Integer.parseInt(value));
+				complaint = specialComplaintRepositoryRDB.find(Integer.parseInt(value));
 			}
 			return complaint;
 		} else {

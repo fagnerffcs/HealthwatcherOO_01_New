@@ -59,5 +59,9 @@ public class Employee implements Serializable {
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
+	
+	public boolean validatePassword(String password){
+		return this.password.equals(password);
+	}
 
 }
