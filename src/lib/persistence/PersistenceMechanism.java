@@ -28,7 +28,7 @@ public class PersistenceMechanism implements IPersistenceMechanism {
 
 	@Override
 	public void disconnect() throws PersistenceMechanismException {
-		this.em.close();		
+		this.jpaUtil.close(this.em);		
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class PersistenceMechanism implements IPersistenceMechanism {
 
 	@Override
 	public void releaseCommunicationChannel() throws PersistenceMechanismException {
-		this.em.clear();
+		this.em.close();
 	}
 
 	@Override
@@ -48,7 +48,8 @@ public class PersistenceMechanism implements IPersistenceMechanism {
 
 	@Override
 	public void commitTransaction() throws TransactionException {
-		this.em.getTransaction().commit();		
+		this.em.getTransaction().commit();
+		this.em.close();
 	}
 
 	@Override
