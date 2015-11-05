@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/template.xhtml">
+   <ui:define name="content">
+	  <h:form method="post">
+		<h:panelGrid columns="2" cellpadding="5">
+		    <h:outputLabel for="j_username" value="Usuário: * " />  
+		    <h:inputText id="j_username" value="#{facade.fCid.employeeLogin.login}" required="true" requiredMessage="Campo obrigatório." />
+		      
+		    <h:outputLabel for="j_password" value="Senha: * " requiredMessage="Campo obrigatório." />  
+		    <h:inputSecret id="j_password" value="#{facade.fCid.employeeLogin.password}" required="true" requiredMessage="Campo obrigatório." />  
+
+			<h:commandButton value="Login" action="#{facade.fCid.employeeLogin.login()}" />
+			<h:commandButton type="reset" value="Clear" />
+		</h:panelGrid>
+		<h:messages styleClass="messages" />	
+	  </h:form>
+   	  <center>
+	   	  <h:outputLink value="#{facesContext.externalContext.request.contextPath}/home.jsf">
+	   	  	Main Menu
+	   	  </h:outputLink>
+	  </center>		
+   </ui:define>
+</ui:composition>
