@@ -11,6 +11,7 @@ import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.RepositoryException;
 import lib.persistence.PersistenceMechanism;
+import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.data.IHealthUnitRepository;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
 import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
@@ -106,24 +107,25 @@ public class HealthUnitRepositoryRDB implements Serializable, IHealthUnitReposit
 	}
 
 	@Override
-	public List<HealthUnit> getHealthUnitList() throws ObjectNotFoundException,
+	public IteratorDsk getHealthUnitList() throws ObjectNotFoundException,
 			RepositoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<HealthUnit> getPartialHealthUnitList()
+	public IteratorDsk getPartialHealthUnitList()
 			throws ObjectNotFoundException, RepositoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<HealthUnit> getHealthUnitListBySpeciality(int codEspecialidade)
+	public IteratorDsk getHealthUnitListBySpeciality(int codEspecialidade)
 			throws ObjectNotFoundException, RepositoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

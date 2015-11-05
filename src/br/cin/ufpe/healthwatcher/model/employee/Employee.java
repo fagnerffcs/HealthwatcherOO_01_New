@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Entity
 @NamedQueries({
 	@NamedQuery(name="todosEmployees", query="SELECT e FROM Employee e"),
@@ -61,7 +63,8 @@ public class Employee implements Serializable {
 	}
 	
 	public boolean validatePassword(String password){
-		return this.password.equals(password);
+		BCryptPasswordEncoder crypto = new BCryptPasswordEncoder();
+		return crypto.matches(password, this.password);
 	}
 
 }

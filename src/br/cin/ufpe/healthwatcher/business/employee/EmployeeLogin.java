@@ -3,10 +3,9 @@ package br.cin.ufpe.healthwatcher.business.employee;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import lib.exceptions.ObjectNotFoundException;
@@ -15,23 +14,18 @@ import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
 import lib.exceptions.TransactionException;
 import lib.exceptions.UpdateEntryException;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.employee.Employee;
 
 @ManagedBean(name="employeeLogin")
-@SessionScoped
+@ViewScoped
 public class EmployeeLogin implements Serializable {
 
 	private static final long serialVersionUID = -8729930869176381346L;
 
 	private String login;
 	private String password;
-	
 	private boolean logged = false;
-	
 	private HealthWatcherFacade facade;
 	
 	public String getLogin() {
@@ -58,28 +52,15 @@ public class EmployeeLogin implements Serializable {
 		this.logged = isLogged;
 	}
 	
-	@PostConstruct
-	private void init(){
-		if(facade==null){
-			try {
-				this.facade = HealthWatcherFacade.getInstance();
-			} catch (PersistenceMechanismException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
 	public String login() throws RepositoryException, ObjectNotValidException, UpdateEntryException{
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		try{
 			Employee employee = null;
+			if(facade==null){
+				this.facade = HealthWatcherFacade.getInstance();				
+			}
 			employee = facade.searchEmployee(this.login);
-			BCryptPasswordEncoder crypto = new BCryptPasswordEncoder();
-			if(employee.validatePassword(crypto.encode(password))){
+			if(employee.validatePassword(password)){
 				this.logged = true;
 				return "/employee/menuEmployee?faces-redirect=true";
 			} else {
@@ -92,6 +73,10 @@ public class EmployeeLogin implements Serializable {
 									"Invalid password. Try again.", "Invalid Credentials!"));
 			return "";			
 		} catch(TransactionException te){
+			
+		} catch(PersistenceMechanismException pme){
+			
+		} catch(IOException ioe){
 			
 		}
 		return "";

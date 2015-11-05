@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.business.employee.EmployeeLogin;
 import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
 import br.cin.ufpe.healthwatcher.model.complaint.SpecialComplaint;

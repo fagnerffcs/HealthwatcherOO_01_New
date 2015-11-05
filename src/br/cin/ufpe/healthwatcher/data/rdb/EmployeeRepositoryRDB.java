@@ -24,6 +24,7 @@ public class EmployeeRepositoryRDB implements Serializable, IEmployeeRepository 
 
 	private static Logger log = LoggerFactory.getLogger(EmployeeRepositoryRDB.class);
 	
+	@SuppressWarnings("unused")
 	private IPersistenceMechanism pm;
 	
 	public EmployeeRepositoryRDB(){
@@ -64,8 +65,10 @@ public class EmployeeRepositoryRDB implements Serializable, IEmployeeRepository 
 
 	@Override
 	public Employee search(String login) throws ObjectNotFoundException, RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = new JPAUtil().getEntityManager();
+		Employee e = em.find(Employee.class, login);
+		em.close();
+		return e;
 	}
 
 	@Override

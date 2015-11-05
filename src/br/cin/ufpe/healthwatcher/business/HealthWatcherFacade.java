@@ -1,9 +1,9 @@
 package br.cin.ufpe.healthwatcher.business;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -17,18 +17,24 @@ import lib.exceptions.TransactionException;
 import lib.exceptions.UpdateEntryException;
 import lib.persistence.IPersistenceMechanism;
 import lib.persistence.PersistenceMechanism;
+import lib.util.IteratorDsk;
+import br.cin.ufpe.healthwatcher.Constants;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
 import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 import br.cin.ufpe.healthwatcher.model.employee.Employee;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
-import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 
+@ManagedBean(name="facade")
 @ApplicationScoped
 public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	
 	private static HealthWatcherFacade singleton; //padrao singleton
 	
 	private HealthWatcherFacadeInit fCid;
+
+	public HealthWatcherFacadeInit getfCid() {
+		return fCid;
+	}
 
 	private static IPersistenceMechanism pm = null;
 
@@ -50,9 +56,8 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 		return pm;
 	}
 	
-	//TODO:carregar do resource bundle
 	static boolean isPersistent() {
-		return true;
+		return Constants.isPersistent();
 	}	
 	
 	static IPersistenceMechanism pmInit() {
@@ -96,7 +101,7 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	}
 
 	@Override
-	public List<MedicalSpecialty> searchSpecialitiesByHealthUnit(int code)
+	public IteratorDsk searchSpecialitiesByHealthUnit(int code)
 			throws ObjectNotFoundException, RepositoryException,
 			TransactionException {
 		// TODO Auto-generated method stub
@@ -118,7 +123,7 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	}
 
 	@Override
-	public List<HealthUnit> searchHealthUnitsBySpeciality(int code)
+	public IteratorDsk searchHealthUnitsBySpeciality(int code)
 			throws ObjectNotFoundException, RepositoryException,
 			TransactionException {
 		// TODO Auto-generated method stub
@@ -126,7 +131,7 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	}
 
 	@Override
-	public List<MedicalSpecialty> getSpecialityList()
+	public IteratorDsk getSpecialityList()
 			throws RepositoryException, ObjectNotFoundException,
 			TransactionException {
 		// TODO Auto-generated method stub
@@ -134,25 +139,24 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	}
 
 	@Override
-	public List<DiseaseType> getDiseaseTypeList() throws RepositoryException,
+	public IteratorDsk getDiseaseTypeList() throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<HealthUnit> getHealthUnitList() throws RepositoryException,
+	public IteratorDsk getHealthUnitList() throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<HealthUnit> getPartialHealthUnitList()
+	public IteratorDsk getPartialHealthUnitList()
 			throws RepositoryException, ObjectNotFoundException,
 			TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getPartialHealthUnitList();
 	}
 
 	@Override
@@ -171,7 +175,7 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	}
 
 	@Override
-	public List<Complaint> getComplaintList() throws ObjectNotFoundException,
+	public IteratorDsk getComplaintList() throws ObjectNotFoundException,
 			TransactionException {
 		// TODO Auto-generated method stub
 		return null;
@@ -196,8 +200,7 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	public Employee searchEmployee(String login) throws TransactionException,
 			RepositoryException, ObjectNotFoundException,
 			ObjectNotValidException, UpdateEntryException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.searchEmployee(login);
 	}
 
 	@Override

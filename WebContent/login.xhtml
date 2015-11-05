@@ -8,12 +8,12 @@
 	  <h:form method="post">
 		<h:panelGrid columns="2" cellpadding="5">
 		    <h:outputLabel for="j_username" value="Usuário: * " />  
-		    <h:inputText id="j_username" value="#{facade.employeeLogin.employee.login}" required="true" requiredMessage="Campo obrigatório." />
+		    <h:inputText id="j_username" value="#{facade.fCid.employeeLogin.login}" required="true" requiredMessage="Campo obrigatório." />
 		      
 		    <h:outputLabel for="j_password" value="Senha: * " requiredMessage="Campo obrigatório." />  
-		    <h:inputSecret id="j_password" value="#{facade.employeeLogin.employee.password}" required="true" requiredMessage="Campo obrigatório." />  
+		    <h:inputSecret id="j_password" value="#{facade.fCid.employeeLogin.password}" required="true" requiredMessage="Campo obrigatório." />  
 
-			<h:commandButton value="Login" action="#{facade.employeeLogin.login()}" />
+			<h:commandButton value="Login" action="#{facade.fCid.employeeLogin.login()}" />
 			<h:commandButton type="reset" value="Clear" />
 		</h:panelGrid>
 		<h:messages styleClass="messages" />	

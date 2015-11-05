@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.cin.ufpe.healthwatcher.data.rdb.FoodComplaintRepositoryRDB;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.address.Address;
 import br.cin.ufpe.healthwatcher.model.complaint.FoodComplaint;
 import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
@@ -21,9 +21,8 @@ public class FoodComplaintRecord implements Serializable {
 	
 	private static final long serialVersionUID = -396582813699440065L;
 
-	private FoodComplaintRepositoryRDB foodComplaintService = new FoodComplaintRepositoryRDB();
-	
 	private FoodComplaint foodComplaint;
+	private HealthWatcherFacade facade;
 	
 	public FoodComplaintRecord() {
 		this.foodComplaint = new FoodComplaint();
@@ -52,13 +51,15 @@ public class FoodComplaintRecord implements Serializable {
 		try{
 			foodComplaint.setDataQueixa(new Date());
 			foodComplaint.setSituacao(Situacao.OPEN);
-			foodComplaintService.inserir(foodComplaint);
-			facesContext.getExternalContext().getFlash().put("codigo", foodComplaint.getCodigo());
+			if(facade==null){
+				this.facade = HealthWatcherFacade.getInstance();				
+			}			
+			facesContext.getExternalContext().getFlash().put("codigo", facade.insertComplaint(foodComplaint));
 			init();
 			return "foodComplaintInserted?faces-redirect=true";
 		} catch(Exception e){
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "NÃ£o foi possÃ­vel registrar a reclamaÃ§Ã£o!", "Registration mal sucedido"));
+                    "Não foi possível registrar a reclamação!", "Registration mal sucedido"));
             return "";
 		}
 	}
