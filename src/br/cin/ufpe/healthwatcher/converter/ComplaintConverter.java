@@ -1,35 +1,41 @@
 package br.cin.ufpe.healthwatcher.converter;
 
+import java.io.IOException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import br.cin.ufpe.healthwatcher.data.rdb.AnimalComplaintRepositoryRDB;
-import br.cin.ufpe.healthwatcher.data.rdb.FoodComplaintRepositoryRDB;
-import br.cin.ufpe.healthwatcher.data.rdb.SpecialComplaintRepositoryRDB;
+import lib.exceptions.ObjectNotFoundException;
+import lib.exceptions.PersistenceMechanismException;
+import lib.exceptions.RepositoryException;
+import lib.exceptions.TransactionException;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
 
 @ManagedBean
 @RequestScoped
 public class ComplaintConverter implements Converter {
 	
-	private FoodComplaintRepositoryRDB foodComplaintService = new FoodComplaintRepositoryRDB();
-	
-	private AnimalComplaintRepositoryRDB animalComplaintService = new AnimalComplaintRepositoryRDB();
-	
-	private SpecialComplaintRepositoryRDB specialComplaintRepositoryRDB = new SpecialComplaintRepositoryRDB();
-	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,	String value) {
 		if(value!=null){
-			Complaint complaint = foodComplaintService.find(Integer.parseInt(value));
-			if(complaint==null){
-				complaint = animalComplaintService.find(Integer.parseInt(value));
-			}
-			if(complaint==null){
-				complaint = specialComplaintRepositoryRDB.find(Integer.parseInt(value));
+			Complaint complaint = null;
+			try {
+				HealthWatcherFacade facade;
+				facade = HealthWatcherFacade.getInstance();
+				complaint = facade.getfCid().searchComplaint(Integer.parseInt(value));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (RepositoryException e) {
+				e.printStackTrace();
+			} catch (ObjectNotFoundException e) {
+				e.printStackTrace();
+			} catch (TransactionException e) {
+				e.printStackTrace();
+			} catch (PersistenceMechanismException | IOException e) {
 			}
 			return complaint;
 		} else {

@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.cin.ufpe.healthwatcher.data.rdb.SpecialComplaintRepositoryRDB;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.address.Address;
 import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
 import br.cin.ufpe.healthwatcher.model.complaint.SpecialComplaint;
@@ -21,9 +21,8 @@ public class SpecialComplaintRecord implements Serializable {
 	
 	private static final long serialVersionUID = -5104908221615000012L;
 
-	private SpecialComplaintRepositoryRDB specialComplaintRepositoryRDB = new SpecialComplaintRepositoryRDB();
-	
 	private SpecialComplaint specialComplaint;
+	private HealthWatcherFacade facade;
 	
 	public SpecialComplaintRecord() {
 		specialComplaint = new SpecialComplaint();
@@ -54,8 +53,10 @@ public class SpecialComplaintRecord implements Serializable {
 			this.specialComplaint.setDataParecer(new Date());
 			this.specialComplaint.setDataQueixa(new Date());
 			this.specialComplaint.setSituacao(Situacao.OPEN);
-			specialComplaintRepositoryRDB.inserir(specialComplaint);
-			facesContext.getExternalContext().getFlash().put("codigo", specialComplaint.getCodigo());
+			if(facade==null){
+				this.facade = HealthWatcherFacade.getInstance();				
+			}			
+			facesContext.getExternalContext().getFlash().put("codigo", facade.insertComplaint(specialComplaint));
 			return "specialComplaintInserted?faces-redirect=true";
 		} catch(Exception e){
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,

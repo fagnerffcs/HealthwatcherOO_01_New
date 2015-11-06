@@ -1,38 +1,41 @@
 package lib.persistence;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
-import br.cin.ufpe.healthwatcher.util.JPAUtil;
 import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.TransactionException;
 
 public class PersistenceMechanism implements IPersistenceMechanism {
 	
 	private static PersistenceMechanism singleton;
-	
-	private JPAUtil jpaUtil;
+	private EntityManagerFactory emf;
 	private EntityManager em;
-
-	public static synchronized PersistenceMechanism getInstance() throws PersistenceMechanismException {
+	
+	public static PersistenceMechanism getInstance() throws PersistenceMechanismException {
 		if (singleton == null){
 			singleton = new PersistenceMechanism();
-			singleton.setJpaUtil(new JPAUtil());
 		}
 		return singleton;
 	}
 	
 	@Override
 	public void connect() throws PersistenceMechanismException {
-		this.em = singleton.getJpaUtil().getEntityManager();
+		this.emf = Persistence.createEntityManagerFactory("healthwatcher");
+		this.em = this.emf.createEntityManager();
 	}
 
 	@Override
 	public void disconnect() throws PersistenceMechanismException {
-		this.jpaUtil.close(this.em);		
+		this.emf.close();
 	}
 
 	@Override
 	public Object getCommunicationChannel()	throws PersistenceMechanismException {
+		if(!this.em.isOpen()){
+			this.em = this.emf.createEntityManager();			
+		}
 		return this.em;
 	}
 
@@ -49,20 +52,11 @@ public class PersistenceMechanism implements IPersistenceMechanism {
 	@Override
 	public void commitTransaction() throws TransactionException {
 		this.em.getTransaction().commit();
-		this.em.close();
 	}
 
 	@Override
 	public void rollbackTransaction() throws TransactionException {
 		this.em.getTransaction().rollback();
-	}
-
-	public JPAUtil getJpaUtil() {
-		return jpaUtil;
-	}
-
-	public void setJpaUtil(JPAUtil jpaUtil) {
-		this.jpaUtil = jpaUtil;
 	}
 
 }

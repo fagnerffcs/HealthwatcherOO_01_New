@@ -3,8 +3,8 @@ package br.cin.ufpe.healthwatcher.business;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
@@ -41,30 +41,21 @@ import br.cin.ufpe.healthwatcher.model.employee.Employee;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
 import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 
-@ManagedBean
-@SessionScoped
+@ManagedBean(name="fCid")
+@ApplicationScoped
 public class HealthWatcherFacadeInit implements Serializable {
 
 	private static final long serialVersionUID = -2205283915107762308L;
 
 	private AnimalComplaintRecord animalComplaintRecord;
-
 	private FoodComplaintRecord foodComplaintRecord;
-
+	private SpecialComplaintRecord specialComplaintRecord;	
 	private ComplaintRecord complaintRecord;
-
 	private EmployeeLogin employeeLogin;
-
 	private EmployeeRecord employeeRecord;
-
-	private SpecialComplaintRecord specialComplaintRecord;
-
 	private HealthUnitRecord healthUnitRecord;
-
 	private MedicalSpecialtyRecord specialityRecord;
-
 	private SearchComplaintRecord searchComplaintRecord;
-
 	private DiseaseRecord diseaseRecord;
 	
 	public AnimalComplaintRecord getAnimalComplaintRecord() {
@@ -73,6 +64,10 @@ public class HealthWatcherFacadeInit implements Serializable {
 
 	public FoodComplaintRecord getFoodComplaintRecord() {
 		return foodComplaintRecord;
+	}
+
+	public SpecialComplaintRecord getSpecialComplaintRecord() {
+		return specialComplaintRecord;
 	}
 
 	public ComplaintRecord getComplaintRecord() {
@@ -85,10 +80,6 @@ public class HealthWatcherFacadeInit implements Serializable {
 
 	public EmployeeRecord getEmployeeRecord() {
 		return employeeRecord;
-	}
-
-	public SpecialComplaintRecord getSpecialComplaintController() {
-		return specialComplaintRecord;
 	}
 
 	public HealthUnitRecord getHealthUnitRecord() {

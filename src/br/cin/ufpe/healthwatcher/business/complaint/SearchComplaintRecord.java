@@ -33,11 +33,9 @@ public class SearchComplaintRecord implements Serializable {
 	private boolean noDataFound;
 	private String complaintKind;
 	
-	private FoodComplaintRepositoryRDB foodComplaintService = new FoodComplaintRepositoryRDB();
-	
-	private AnimalComplaintRepositoryRDB animalComplaintService = new AnimalComplaintRepositoryRDB();
-	
-	private SpecialComplaintRepositoryRDB specialComplaintRepositoryRDB = new SpecialComplaintRepositoryRDB();
+	private FoodComplaintRepositoryRDB foodComplaintService;
+	private AnimalComplaintRepositoryRDB animalComplaintService;
+	private SpecialComplaintRepositoryRDB specialComplaintRepositoryRDB;
 	
 	@PostConstruct
 	private void init(){

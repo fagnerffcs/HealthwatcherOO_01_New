@@ -1,54 +1,57 @@
 package br.cin.ufpe.healthwatcher.data.rdb;
 
-import javax.persistence.EntityManager;
-
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
-import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
 import lib.persistence.IPersistenceMechanism;
 import lib.persistence.PersistenceMechanism;
 import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.data.IComplaintRepository;
+import br.cin.ufpe.healthwatcher.model.complaint.AnimalComplaint;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
-import br.cin.ufpe.healthwatcher.util.JPAUtil;
+import br.cin.ufpe.healthwatcher.model.complaint.FoodComplaint;
+import br.cin.ufpe.healthwatcher.model.complaint.SpecialComplaint;
 
-@SuppressWarnings("unused")
 public class ComplaintRepositoryRDB implements IComplaintRepository {
 	
 	private IPersistenceMechanism pm;
-	
-	private EmployeeRepositoryRDB employeeRep;
 
 	public ComplaintRepositoryRDB(PersistenceMechanism pm) {
 		this.pm = pm;
-		employeeRep = new EmployeeRepositoryRDB(pm);
 	}
 
 	@Override
 	public int insert(Complaint complaint) throws ObjectNotValidException,
 			ObjectAlreadyInsertedException, ObjectNotValidException,
 			RepositoryException {
-		EntityManager em;
-		try {
-			em = (EntityManager) this.pm.getCommunicationChannel();
-			em.persist(complaint);
-		} catch (PersistenceMechanismException e) {
-			e.printStackTrace();
+		if(complaint instanceof FoodComplaint){
+			FoodComplaintRepositoryRDB foodRepositoryRDB = new FoodComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+			return foodRepositoryRDB.insert((FoodComplaint) complaint);
+		} else if(complaint instanceof AnimalComplaint){
+			AnimalComplaintRepositoryRDB animalRepositoryRDB = new AnimalComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+			return animalRepositoryRDB.insert((AnimalComplaint) complaint);
+		} else if(complaint instanceof SpecialComplaint){
+			SpecialComplaintRepositoryRDB specialRepository = new SpecialComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+			return specialRepository.insert((SpecialComplaint) complaint);
 		}
-		return complaint.getCodigo();
+		return 0;
 	}
 
 	@Override
 	public void update(Complaint complaint) throws ObjectNotValidException,
 			ObjectNotFoundException, ObjectNotValidException,
 			RepositoryException {
-		EntityManager em = new JPAUtil().getEntityManager();
-		em.getTransaction().begin();
-		em.merge(complaint);
-		em.getTransaction().commit();
-		em.close();		
+		if(complaint instanceof FoodComplaint){
+			FoodComplaintRepositoryRDB foodRepositoryRDB = new FoodComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+			foodRepositoryRDB.update((FoodComplaint) complaint);
+		} else if(complaint instanceof AnimalComplaint){
+			AnimalComplaintRepositoryRDB animalRepositoryRDB = new AnimalComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+			animalRepositoryRDB.update((AnimalComplaint) complaint);
+		} else if(complaint instanceof SpecialComplaint){
+			SpecialComplaintRepositoryRDB specialRepository = new SpecialComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+			specialRepository.update((SpecialComplaint) complaint);
+		}	
 	}
 
 	@Override
