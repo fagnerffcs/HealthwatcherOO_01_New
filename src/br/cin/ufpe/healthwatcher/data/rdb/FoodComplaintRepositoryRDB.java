@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
 import lib.exceptions.ObjectAlreadyInsertedException;
@@ -48,18 +47,6 @@ public class FoodComplaintRepositoryRDB implements Serializable, IComplaintRepos
 		em.close();
 	}
 	
-	public FoodComplaint find(Integer complaintCode) {
-		EntityManager em = new JPAUtil().getEntityManager();
-		FoodComplaint foodComplaint = null;
-		try{
-			foodComplaint = (FoodComplaint) em.createNamedQuery("foodComplaintByCode").setParameter("code", complaintCode).getSingleResult();
-		} catch(NoResultException nre) {
-			log.warn("FoodComplaint " + complaintCode + " não existe.");
-		}
-		em.close();
-		return foodComplaint;
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<FoodComplaint> listFoodComplaints() {
 		EntityManager em = new JPAUtil().getEntityManager();
@@ -131,7 +118,13 @@ public class FoodComplaintRepositoryRDB implements Serializable, IComplaintRepos
 	@Override
 	public Complaint search(int complaint) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
+		EntityManager em;
+		try {
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			return em.find(FoodComplaint.class, complaint);
+		} catch (PersistenceMechanismException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

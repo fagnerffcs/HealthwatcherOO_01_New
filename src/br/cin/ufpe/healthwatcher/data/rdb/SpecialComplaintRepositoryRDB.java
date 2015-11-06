@@ -130,7 +130,13 @@ public class SpecialComplaintRepositoryRDB implements Serializable, IComplaintRe
 	@Override
 	public Complaint search(int complaint) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
+		EntityManager em;
+		try {
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			return em.find(SpecialComplaint.class, complaint);
+		} catch (PersistenceMechanismException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

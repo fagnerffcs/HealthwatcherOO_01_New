@@ -68,10 +68,20 @@ public class ComplaintRepositoryRDB implements IComplaintRepository {
 	}
 
 	@Override
-	public Complaint search(int complaint) throws ObjectNotFoundException,
+	public Complaint search(int code) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		Complaint complaint = null;
+		FoodComplaintRepositoryRDB foodRepositoryRDB = new FoodComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+		complaint = foodRepositoryRDB.search(code);
+		if(complaint==null){
+			AnimalComplaintRepositoryRDB animalRepositoryRDB = new AnimalComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+			complaint = animalRepositoryRDB.search(code);
+			if(complaint==null){
+				SpecialComplaintRepositoryRDB specialRepository = new SpecialComplaintRepositoryRDB((PersistenceMechanism) this.pm);
+				complaint = specialRepository.search(code);
+			}
+		}
+		return complaint;
 	}
 
 	@Override

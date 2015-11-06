@@ -1,5 +1,6 @@
 package br.cin.ufpe.healthwatcher.business.complaint;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +11,14 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 
-import br.cin.ufpe.healthwatcher.data.rdb.AnimalComplaintRepositoryRDB;
-import br.cin.ufpe.healthwatcher.data.rdb.FoodComplaintRepositoryRDB;
-import br.cin.ufpe.healthwatcher.data.rdb.SpecialComplaintRepositoryRDB;
+import lib.exceptions.ObjectNotFoundException;
+import lib.exceptions.PersistenceMechanismException;
+import lib.exceptions.RepositoryException;
+import lib.exceptions.TransactionException;
+import lib.util.IteratorDsk;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.complaint.AnimalComplaint;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
-import br.cin.ufpe.healthwatcher.model.complaint.FoodComplaint;
-import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
 import br.cin.ufpe.healthwatcher.model.complaint.SpecialComplaint;
 
 @ManagedBean
@@ -32,10 +34,7 @@ public class SearchComplaintRecord implements Serializable {
 	private boolean specialComplaintFlag = false;
 	private boolean noDataFound;
 	private String complaintKind;
-	
-	private FoodComplaintRepositoryRDB foodComplaintService;
-	private AnimalComplaintRepositoryRDB animalComplaintService;
-	private SpecialComplaintRepositoryRDB specialComplaintRepositoryRDB;
+	HealthWatcherFacade facade;
 	
 	@PostConstruct
 	private void init(){
@@ -43,14 +42,15 @@ public class SearchComplaintRecord implements Serializable {
 		if(facesContext!=null){
 			Flash flash = facesContext.getExternalContext().getFlash();
 			String codigo = (String) flash.get("complaint");
-			String tipoComplaint = (String) flash.get("complaintKind");
 			if(codigo!=null){
-				if(tipoComplaint.equals("Animal complaint")){
-					this.complaint = animalComplaintService.find(Integer.parseInt(codigo));
-				} else if(tipoComplaint.equals("Special complaint")){
-					this.complaint = specialComplaintRepositoryRDB.find(Integer.parseInt(codigo));
-				} else {
-					this.complaint = foodComplaintService.find(Integer.parseInt(codigo));
+				try {
+					if(facade==null){
+						facade = HealthWatcherFacade.getInstance();
+					}
+					this.complaint = facade.getfCid().searchComplaint(Integer.parseInt(codigo));
+				} catch (NumberFormatException | RepositoryException | PersistenceMechanismException | IOException
+						| ObjectNotFoundException | TransactionException e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -101,9 +101,18 @@ public class SearchComplaintRecord implements Serializable {
 
 	public List<Complaint> getComplaints() {
 		this.complaints = new ArrayList<Complaint>();
-		this.complaints.addAll(animalComplaintService.listAnimalComplaintsBySituation(Situacao.OPEN));
-		this.complaints.addAll(foodComplaintService.listFoodComplaintsBySituation(Situacao.OPEN));
-		this.complaints.addAll(specialComplaintRepositoryRDB.listSpecialComplaintsBySituation(Situacao.OPEN));
+		try{
+			if(facade==null){
+				facade = HealthWatcherFacade.getInstance();
+			}
+			IteratorDsk it = facade.getfCid().getComplaintList();
+			while(it.hasNext()){
+				Complaint c = (Complaint) it.next();
+				this.complaints.add(c);
+			}
+		} catch (Exception e){
+			
+		}
 		return complaints;
 	}
 
@@ -119,15 +128,16 @@ public class SearchComplaintRecord implements Serializable {
 	}
 	
 	public String updateComplaint(){
-		if(this.complaint instanceof FoodComplaint){
-			foodComplaintService.update((FoodComplaint) this.complaint);
-		} else if(this.complaint instanceof AnimalComplaint){
-			animalComplaintService.update((AnimalComplaint) this.complaint);
-		} else {
-			specialComplaintRepositoryRDB.update((SpecialComplaint) this.complaint);
+		try{
+			if(facade==null){
+				facade = HealthWatcherFacade.getInstance();
+			}
+			facade.getfCid().getComplaintRecord().update(this.complaint);
+			init();
+			return "updateSearchComplaintData?faces-redirect=true";
+		} catch (Exception e) {
+			return "";
 		}
-		init();
-		return "updateSearchComplaintData?faces-redirect=true";
 	}	
 
 	public String getComplaintKind() {

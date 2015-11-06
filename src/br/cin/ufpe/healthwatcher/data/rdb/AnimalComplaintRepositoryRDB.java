@@ -129,7 +129,13 @@ public class AnimalComplaintRepositoryRDB implements Serializable, IComplaintRep
 	@Override
 	public Complaint search(int complaint) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
+		EntityManager em;
+		try {
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			return em.find(AnimalComplaint.class, complaint);
+		} catch (PersistenceMechanismException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
