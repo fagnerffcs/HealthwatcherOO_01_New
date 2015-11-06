@@ -10,98 +10,157 @@
    	  <h:form method="post">
    	  	<h:messages id="messages" styleClass="messages" />
    	  	<p>Complaint Description</p>
-   	  	<h:inputTextarea value="#{facade.fCid.foodComplaintRecord.foodComplaint.descricao}" rows="4" cols="50" />
+   	  	<h:inputTextarea id="complaintDescription" value="#{facade.fCid.foodComplaintRecord.foodComplaint.descricao}" rows="4" cols="50">
+   	  		<f:validateRequired/>
+   	  		<f:validateLength minimum="1" maximum="200" />
+   	  	</h:inputTextarea>
 
    	  	<p>Observations</p>
-   	  	<h:inputTextarea value="#{facade.fCid.foodComplaintRecord.foodComplaint.observacao}" rows="2" cols="50" />
+   	  	<h:inputTextarea id="Observations" value="#{facade.fCid.foodComplaintRecord.foodComplaint.observacao}" rows="2" cols="50">
+   	  		<f:validateLength maximum="200"/>
+   	  	</h:inputTextarea>
    	  	
    	  	<h3>Complainer Data</h3>
 		<p>Complainer name:
-		   <h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.solicitante}" />
+		   <h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.solicitante}">
+			<f:validateRequired/>
+			<f:validateLength minimum="1" maximum="100" />
+		   </h:inputText>
 		</p>
 		<div>
 			Address: 
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.street}" />
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.street}">
+				<f:validateLength maximum="100" />
+			</h:inputText>
 			
 			Complement:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.complement}" />
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.complement}">
+				<f:validateLength maximum="100" />
+			</h:inputText>
 		</div>
 		<p>
 			Province:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.neighbourhood}" />
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.neighbourhood}">
+				<f:validateLength maximum="100" />
+			</h:inputText>
 		</p>
 		
 		<p>
 			City:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.city}" />
+			<h:inputText id="complainerCity" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.city}">
+				<f:validateRequired/>
+				<f:validateLength maximum="100" />
+			</h:inputText>
 			
 			State:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.state}" />
+			<h:inputText id="complaintState" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.state}">
+				<f:validateRequired/>
+				<f:validateLength maximum="100" />
+			</h:inputText>
 			
 			ZIP Code:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.zip}" />			
+			<h:inputText id="complainerZipCode" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.zip}">
+				<f:validateLength maximum="20"/>
+			</h:inputText>
 		</p>
 		<p>
 			Phone Number:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.phone}" />
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.phone}">
+				<f:validateLength maximum="20"/>
+			</h:inputText>
 		</p>
 		<p>
 			E-mail:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.email}" />
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.email}" required="true" requiredMessage="Please enter your email address." validatorMessage="Invalid email format.">
+				<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+			</h:inputText>
 		</p>
 		
 		<h3>Victim Information</h3>
 		<p>
 			Name:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.nomeVitima}" />
+			<h:inputText id="victimName" value="#{facade.fCid.foodComplaintRecord.foodComplaint.nomeVitima}">
+				<f:validateRequired/>
+				<f:validateLength minimum="1" maximum="100"/>
+			</h:inputText>
 		</p>
 		<p>
 			Address:
-		   <h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.street}" />
+		   <h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.street}">
+		   		<f:validateLength maximum="100"/>
+		   </h:inputText>
 		   
 		   Complement:
-		   <h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.complement}" />
+		   <h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.complement}">
+		   		<f:validateLength maximum="100"/>
+		   	</h:inputText>
 		</p>
 		<p>
 			Province:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.neighbourhood}" />
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.neighbourhood}">
+				<f:validateLength maximum="100"/>
+			</h:inputText>
 		</p>
 		<p>
 			Closest City:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.city}" />
+			<h:inputText id="victimCity" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.city}">
+				<f:validateRequired/>
+				<f:validateLength minimum="1" maximum="100"/>
+			</h:inputText>
 			
 			State:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.state}" />
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.state}">
+				<f:validateRequired/>
+				<f:validateLength minimum="1" maximum="100"/>
+			</h:inputText>
 			
 			ZIP Code:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.zip}" />			
+			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.zip}">
+				<f:validateLength maximum="20" />
+			</h:inputText>
    	  	</p>
    	  	<p>
    	  		Telephone:
-   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.phone}" />
+   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.phone}">
+   	  			<f:validateLength maximum="20" />
+   	  		</h:inputText>
    	  	</p>
    	  	
    	  	<h3>Event Information</h3>
    	  	<p>
    	  		Amount of people that ate the meal:
-   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeComensais}" />
+   	  		<h:inputText id="qtdeComensais" value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeComensais}">
+   	  			<f:validateRequired/>
+   	  		</h:inputText>
    	  		
    	  		Amount of sick people:
-   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeDoentes}" />   	  		
+   	  		<h:inputText id="qtdeDoentes" value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeDoentes}">
+   	  			<f:validateRequired/>
+   	  		</h:inputText>
    	  	</p>
    	  	<p>
    	  		Amount of people checked into a hospital:
-   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeInternacoes}" />
+   	  		<h:inputText id="qtdeInternacoes" value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeInternacoes}">
+   	  			<f:validateRequired/>
+   	  		</h:inputText>
    	  		
    	  		Amount of death:
-   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeObitos}" />   	  		
+   	  		<h:inputText id="qtdeObito" value="#{facade.fCid.foodComplaintRecord.foodComplaint.qtdeObitos}">
+   	  			<f:validateRequired/>
+   	  		</h:inputText>
    	  	</p>
    	  	<p>
    	  		Place of medical care:
-   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.localAtendimento}" />
+   	  		<h:inputText id="localAtendimento" value="#{facade.fCid.foodComplaintRecord.foodComplaint.localAtendimento}">
+   	  			<f:validateRequired/>
+   	  			<f:validateLength minimum="1" maximum="100" />
+   	  		</h:inputText>
    	  		
    	  		Suspicous meal:
-   	  		<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.refeicaoSuspeita}" />   	  		
+   	  		<h:inputText id="refeicaoSuspeita" value="#{facade.fCid.foodComplaintRecord.foodComplaint.refeicaoSuspeita}">
+	   	  		<f:validateRequired/>
+	   	  		<f:validateLength minimum="1" maximum="100" />
+	   	  	</h:inputText>   	  		
    	  	</p>
    	  	
 		<h:commandButton style="margin: 10px;" value="Insert" action="#{facade.fCid.foodComplaintRecord.salvar()}" />

@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.cin.ufpe.healthwatcher.data.rdb.AnimalComplaintRepositoryRDB;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.address.Address;
 import br.cin.ufpe.healthwatcher.model.complaint.AnimalComplaint;
 import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
@@ -21,9 +21,8 @@ public class AnimalComplaintRecord implements Serializable {
 	
 	private static final long serialVersionUID = 7502327389893929089L;
 
-	private AnimalComplaintRepositoryRDB animalComplaintRepositoryRDB = new AnimalComplaintRepositoryRDB();
-	
 	private AnimalComplaint animalComplaint;
+	private HealthWatcherFacade facade;
 	
 	public AnimalComplaintRecord() {
 		animalComplaint = new AnimalComplaint();
@@ -54,8 +53,10 @@ public class AnimalComplaintRecord implements Serializable {
 			this.animalComplaint.setDataParecer(new Date());
 			this.animalComplaint.setDataQueixa(new Date());
 			this.animalComplaint.setSituacao(Situacao.OPEN);
-			animalComplaintRepositoryRDB.inserir(animalComplaint);
-			facesContext.getExternalContext().getFlash().put("codigo", animalComplaint.getCodigo());
+			if(facade==null){
+				this.facade = HealthWatcherFacade.getInstance();				
+			}			
+			facesContext.getExternalContext().getFlash().put("codigo", facade.insertComplaint(animalComplaint));
 			init();
 			return "animalComplaintInserted?faces-redirect=true";
 		} catch(Exception e){
