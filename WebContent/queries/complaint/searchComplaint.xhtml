@@ -10,9 +10,9 @@
 	  
 	  <h:form>
 	  	  <h:outputLabel value="Fill in complaint code:" style="font-weight: bold;" />
-		  <h:inputText style="margin-left: 5px;" value="#{facade.complaintController.complaintCode}" />
+		  <h:inputText style="margin-left: 5px;" value="#{facade.fCid.complaintRecord.complaintCode}" />
 			
-		  <h:commandButton style="margin: 10px;" action="#{facade.complaintController.searchComplaint()}" value="Search" />
+		  <h:commandButton style="margin: 10px;" action="#{facade.fCid.complaintRecord.search()}" value="Search" />
 		  <h:commandButton type="reset" value="Clear" />
 		  
 		  <h:messages id="messages" styleClass="messages" />
