@@ -24,6 +24,7 @@ public class SearchComplaintRecord implements Serializable {
 	private static final long serialVersionUID = -6887424307646650506L;
 	
 	private int complaintCode;
+	private Complaint complaint;
 	
 	public int getComplaintCode() {
 		return complaintCode;
@@ -111,6 +112,14 @@ public class SearchComplaintRecord implements Serializable {
 			e.printStackTrace();
 		}
 		return "";
+	}
+
+	public Complaint getComplaint() {
+		return complaint;
+	}
+
+	public void setComplaint(Complaint complaint) {
+		this.complaint = complaint;
 	}
 
 }

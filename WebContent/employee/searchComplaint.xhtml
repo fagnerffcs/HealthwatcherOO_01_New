@@ -10,14 +10,14 @@
 	  	Choose a complaint:
 	  </p>
    	  <h:form>
-	  	<h:outputText value="There isn't any complaints." styleClass="noComplaint" rendered="#{facade.searchComplaintController.noDataFound}" />
+	  	<h:outputText value="There isn't any complaints." styleClass="noComplaint" rendered="#{facade.fCid.searchComplaintRecord.noDataFound}" />
 	  	
 	  	<h:panelGrid style="text-align:center;">
-		  	<h:selectOneMenu value="#{facade.searchComplaintController.complaint}" converter="#{complaintConverter}" >
-		  		<f:selectItems value="#{facade.searchComplaintController.complaints}" var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
+		  	<h:selectOneMenu value="#{facade.fCid.searchComplaintRecord.complaint}" converter="#{complaintConverter}" >
+		  		<f:selectItems value="#{facade.fCid.searchComplaintRecord.getComplaints()}" var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
 		  	</h:selectOneMenu>
 		  	
-		  	<h:commandButton action="#{facade.searchComplaintController.searchComplaint}" value="Search" />
+		  	<h:commandButton action="#{facade.fCid.searchComplaintRecord.search()}" value="Search" />
 		</h:panelGrid>
 	  	
 	   	<center style="margin-top: 10px;">
