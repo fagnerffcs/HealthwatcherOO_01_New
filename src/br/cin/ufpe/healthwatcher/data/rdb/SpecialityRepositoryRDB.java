@@ -1,6 +1,9 @@
 package br.cin.ufpe.healthwatcher.data.rdb;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
@@ -8,6 +11,8 @@ import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.RepositoryException;
 import lib.persistence.IPersistenceMechanism;
 import lib.persistence.PersistenceMechanism;
+import lib.util.ConcreteIterator;
+import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.data.ISpecialityRepository;
 import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 
@@ -48,17 +53,31 @@ public class SpecialityRepositoryRDB implements ISpecialityRepository {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<MedicalSpecialty> getSpecialityList()
+	public IteratorDsk getSpecialityList()
 			throws ObjectNotFoundException, RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		List<MedicalSpecialty> lista = new ArrayList<MedicalSpecialty>();
+		EntityManager em;
+		try{
+			em = (EntityManager) this.pm.getCommunicationChannel();
+			lista = em.createNamedQuery("listAllMedicalSpecialties").getResultList();
+		} catch(Exception e){
+			
+		}
+		return new ConcreteIterator(lista);
 	}
 
 	@Override
 	public MedicalSpecialty search(int codigo) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
+		EntityManager em;
+		try{
+			em = (EntityManager) this.pm.getCommunicationChannel();
+			return em.find(MedicalSpecialty.class, codigo);
+		} catch (Exception e){
+			
+		}
 		return null;
 	}
 

@@ -1,6 +1,7 @@
 package br.cin.ufpe.healthwatcher.data.rdb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,7 +11,9 @@ import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.RepositoryException;
+import lib.persistence.IPersistenceMechanism;
 import lib.persistence.PersistenceMechanism;
+import lib.util.ConcreteIterator;
 import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.data.IHealthUnitRepository;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
@@ -20,12 +23,10 @@ import br.cin.ufpe.healthwatcher.util.JPAUtil;
 public class HealthUnitRepositoryRDB implements Serializable, IHealthUnitRepository {
 	
 	private static final long serialVersionUID = 349734549768639456L;
+	private IPersistenceMechanism mp;
 
-	public HealthUnitRepositoryRDB(){
-		
-	};
-	
-	public HealthUnitRepositoryRDB(PersistenceMechanism pm) {
+	public HealthUnitRepositoryRDB(PersistenceMechanism mp) {
+		this.mp = mp;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -120,11 +121,19 @@ public class HealthUnitRepositoryRDB implements Serializable, IHealthUnitReposit
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IteratorDsk getHealthUnitListBySpeciality(int codEspecialidade)
 			throws ObjectNotFoundException, RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em;
+		List<HealthUnit> lista = new ArrayList<HealthUnit>(); 
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			lista = em.createNamedQuery("healthUnitsBySpecialty").setParameter("code", codEspecialidade).getResultList();
+		} catch (Exception e){
+			
+		}
+		return new ConcreteIterator(lista);
 	}
 
 
