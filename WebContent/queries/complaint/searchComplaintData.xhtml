@@ -6,26 +6,26 @@
    template="/WEB-INF/templates/template.xhtml">
    <ui:define name="content">
 	  
-	  <h:form id="formNoResult" rendered="#{facade.complaintController.noDataFound}">
+	  <h:form id="formNoResult" rendered="#{facade.fCid.searchComplaintRecord.complaint==null}">
 		  <h2>Queries - Error Message</h2>
-		  <h:outputLabel value="Complaint #{facade.complaintController.complaintCode} not found" />
-	  </h:form>   	  
+		  <h:outputLabel value="Complaint #{facade.fCid.searchComplaintRecord.complaintCode} not found" />
+	  </h:form>
 
-	  <h:form id="form" rendered="#{!facade.complaintController.noDataFound}">
+	  <h:form id="form" rendered="#{facade.fCid.searchComplaintRecord.complaint!=null}">
 		  <h1>Search response:</h1>
-		  <h1>Complaint: <h:outputLabel value="#{facade.complaintController.complaintCode}" /> </h1>
+		  <h1>Complaint: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.complaint.codigo}" /> </h1>
 
-		  <h:panelGroup rendered="#{facade.complaintController.foodComplaintFlag}">
+		  <h:panelGroup rendered="#{facade.fCid.searchComplaintRecord.validFoodComplaint()}">
 		  	<ui:include src="/queries/complaint/foodComplaintData.xhtml" />
 		  </h:panelGroup>
 		  
-		  <h:panelGroup rendered="#{facade.complaintController.animalComplaintFlag}">
+		  <h:panelGroup rendered="#{facade.fCid.searchComplaintRecord.validAnimalComplaint()}">
 		  	<ui:include src="/queries/complaint/animalComplaintData.xhtml" />
 		  </h:panelGroup>
 
-		  <h:panelGroup rendered="#{facade.complaintController.specialComplaintFlag}">
+		  <h:panelGroup rendered="#{facade.fCid.searchComplaintRecord.validSpecialComplaint()}">
 		  	<ui:include src="/queries/complaint/specialComplaintData.xhtml" />
-		  </h:panelGroup>		  
+		  </h:panelGroup>
 		  
 		  <h:messages id="messages" styleClass="messages" />
 	  </h:form>   	  

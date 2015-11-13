@@ -4,83 +4,83 @@
    xmlns:f="http://java.sun.com/jsf/core"
    xmlns:h="http://java.sun.com/jsf/html">
 
- 		Complaint code: <h:outputText value="#{facade.complaintController.animalComplaint.codigo}" />
+ 		Complaint code: <h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.codigo}" />
 
  		<p>
 	 		Complaint Kind: <h:outputLabel value="Animal" />
 	 	</p>
  		  	  	
    	  	<p>
-   	  		Complainer: <h:outputLabel value="#{facade.complaintController.animalComplaint.solicitante}" />
+   	  		Complainer: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.solicitante}" />
    	  	</p>
    	  	
    	  	<p>
-   	  		Email: <h:outputLabel value="#{facade.complaintController.animalComplaint.email}" />
+   	  		Email: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.email}" />
    	  	</p>
 
    	  	<p>
-   	  		Complaint's description: <h:outputLabel value="#{facade.complaintController.animalComplaint.descricao}" />
+   	  		Complaint's description: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.descricao}" />
    	  	</p>
    	  	
    	  	<p>Observation:
-   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.observacao}" />
+   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.observacao}" />
    	  	</p>
    	  	
    	  	<p>Date: 
-	   	  	<h:outputText value="#{facade.complaintController.animalComplaint.dataQueixa}">
+	   	  	<h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.dataQueixa}">
 	   	  		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	   	  	</h:outputText>
 	   	</p>
    	  	
-   	  	<p>Status: <h:outputText value="#{facade.complaintController.animalComplaint.situacao}" /> </p>
+   	  	<p>Status: <h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.situacao}" /> </p>
    	  	
    	  	<p>
 	   	  	Complainer's address:
-	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.street}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.enderecoSolicitante.street}" />
 	   	  	,
-	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.complement}" />
-	   	  	Province: <h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.neighbourhood}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.enderecoSolicitante.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.enderecoSolicitante.neighbourhood}" />
    	  	</p>
    	  	
    	  	<p>
-   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.zip}" />
-   	  		City: <h:outputLabel value="#{facade.complaintController.animalComplaint.enderecoSolicitante.city}" />
+   	  		ZIP Code: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.enderecoSolicitante.zip}" />
+   	  		City: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.enderecoSolicitante.city}" />
    	  	</p>
 
 		<p>
-			Phone Number: <h:outputText value="#{facade.complaintController.animalComplaint.enderecoSolicitante.phone}" />
+			Phone Number: <h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.enderecoSolicitante.phone}" />
 		</p>
 		
 		<p>
-			Animal: <h:outputText value="#{facade.complaintController.animalComplaint.animal}" />
+			Animal: <h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.animal}" />
 		</p>
 		
 		<p>
-			Amount of animals: <h:outputText value="#{facade.complaintController.animalComplaint.animalQuantity}" />
+			Amount of animals: <h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.animalQuantity}" />
 		</p>
 		
 		<p>
 			Date:
-			<h:outputText value="#{facade.complaintController.animalComplaint.dataQueixa}">
+			<h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.dataQueixa}">
 				<f:convertDateTime pattern="dd/MM/yyyy"/>
 			</h:outputText>
 		</p>
 
    	  	<p>
 	   	  	Person's sick address:
-	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.street}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.occurenceLocalAddress.street}" />
 	   	  	,
-	   	  	<h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.complement}" />
-	   	  	Province: <h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.neighbourhood}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.occurenceLocalAddress.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.occurenceLocalAddress.neighbourhood}" />
    	  	</p>
    	  	
    	  	<p>
-   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.zip}" />
-   	  		City: <h:outputLabel value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.city}" />
+   	  		ZIP Code: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.occurenceLocalAddress.zip}" />
+   	  		City: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.animalComplaint.occurenceLocalAddress.city}" />
    	  	</p>
 
 		<p>
-			Phone Number: <h:outputText value="#{facade.complaintController.animalComplaint.occurenceLocalAddress.phone}" />
+			Phone Number: <h:outputText value="#{facade.fCid.searchComplaintRecord.animalComplaint.occurenceLocalAddress.phone}" />
 		</p>
 		
 </ui:composition>

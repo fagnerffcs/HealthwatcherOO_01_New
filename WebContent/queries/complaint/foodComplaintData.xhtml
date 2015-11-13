@@ -4,92 +4,92 @@
    xmlns:f="http://java.sun.com/jsf/core"
    xmlns:h="http://java.sun.com/jsf/html">
 
- 		Complaint code: <h:outputText value="#{facade.complaintController.foodComplaint.codigo}" />
+ 		Complaint code: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.codigo}" />
 
  		<p>
 	 		Complaint Kind: <h:outputLabel value="Food" />
 	 	</p>
  		  	  	
    	  	<p>
-   	  		Complainer: <h:outputLabel value="#{facade.complaintController.foodComplaint.solicitante}" />
+   	  		Complainer: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.solicitante}" />
    	  	</p>
    	  	
    	  	<p>
-   	  		Email: <h:outputLabel value="#{facade.complaintController.foodComplaint.email}" />
+   	  		Email: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.email}" />
    	  	</p>
 
    	  	<p>
-   	  		Complaint's description: <h:outputLabel value="#{facade.complaintController.foodComplaint.descricao}" />
+   	  		Complaint's description: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.descricao}" />
    	  	</p>
    	  	
    	  	<p>Observation:
-   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.observacao}" />
+   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.observacao}" />
    	  	</p>
    	  	
    	  	<p>Date: 
-	   	  	<h:outputText value="#{facade.complaintController.foodComplaint.dataQueixa}">
+	   	  	<h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.dataQueixa}">
 	   	  		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	   	  	</h:outputText>
 	   	</p>
    	  	
-   	  	<p>Status: <h:outputText value="#{facade.complaintController.foodComplaint.situacao}" /> </p>
+   	  	<p>Status: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.situacao}" /> </p>
    	  	
    	  	<p>
 	   	  	Complainer's address:
-	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.street}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoSolicitante.street}" />
 	   	  	,
-	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.complement}" />
-	   	  	Province: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.neighbourhood}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoSolicitante.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoSolicitante.neighbourhood}" />
    	  	</p>
    	  	
    	  	<p>
-   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.zip}" />
-   	  		City: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoSolicitante.city}" />
+   	  		ZIP Code: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoSolicitante.zip}" />
+   	  		City: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoSolicitante.city}" />
    	  	</p>
 
 		<p>
-			Phone Number: <h:outputText value="#{facade.complaintController.foodComplaint.enderecoSolicitante.phone}" />
+			Phone Number: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoSolicitante.phone}" />
 		</p>
 		
 		<p>
-			Amount of people that ate the meal: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeComensais}" />
+			Amount of people that ate the meal: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.qtdeComensais}" />
 		</p>
 		
 		<p>
-			Amount of sick people: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeDoentes}" />
+			Amount of sick people: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.qtdeDoentes}" />
 		</p>
 		
 		<p>
-			Amount of people checked into a hospital: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeInternacoes}" />
+			Amount of people checked into a hospital: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.qtdeInternacoes}" />
 		</p>		
 
 		<p>
-			Amount of deaths: <h:outputText value="#{facade.complaintController.foodComplaint.qtdeObitos}" />
+			Amount of deaths: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.qtdeObitos}" />
 		</p>
 
 		<p>
-			Place of medical care: <h:outputText value="#{facade.complaintController.foodComplaint.localAtendimento}" />
+			Place of medical care: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.localAtendimento}" />
 		</p>
 
 		<p>
-			Suspicious meal: <h:outputText value="#{facade.complaintController.foodComplaint.refeicaoSuspeita}" />
+			Suspicious meal: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.refeicaoSuspeita}" />
 		</p>
 
    	  	<p>
 	   	  	Person's sick address:
-	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.street}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoDoente.street}" />
 	   	  	,
-	   	  	<h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.complement}" />
-	   	  	Province: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.neighbourhood}" />
+	   	  	<h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoDoente.complement}" />
+	   	  	Province: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoDoente.neighbourhood}" />
    	  	</p>
    	  	
    	  	<p>
-   	  		ZIP Code: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.zip}" />
-   	  		City: <h:outputLabel value="#{facade.complaintController.foodComplaint.enderecoDoente.city}" />
+   	  		ZIP Code: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoDoente.zip}" />
+   	  		City: <h:outputLabel value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoDoente.city}" />
    	  	</p>
 
 		<p>
-			Phone Number: <h:outputText value="#{facade.complaintController.foodComplaint.enderecoDoente.phone}" />
+			Phone Number: <h:outputText value="#{facade.fCid.searchComplaintRecord.foodComplaint.enderecoDoente.phone}" />
 		</p>				
 		
 </ui:composition>

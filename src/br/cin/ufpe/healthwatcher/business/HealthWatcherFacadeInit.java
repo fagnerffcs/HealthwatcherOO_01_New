@@ -105,7 +105,8 @@ public class HealthWatcherFacadeInit implements Serializable {
 		this.animalComplaintRecord 	= new AnimalComplaintRecord();
 		this.specialComplaintRecord = new SpecialComplaintRecord();
 		
-		this.complaintRecord = new ComplaintRecord(new ComplaintRepositoryArray());
+		this.complaintRecord 		= new ComplaintRecord(new ComplaintRepositoryArray());
+		this.searchComplaintRecord 	= new SearchComplaintRecord();
 		if (Constants.isPersistent()) {
 			this.complaintRecord = new ComplaintRecord(
 					new ComplaintRepositoryRDB(

@@ -10,12 +10,16 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import lib.exceptions.ObjectNotFoundException;
+import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
 import lib.exceptions.TransactionException;
 import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
+import br.cin.ufpe.healthwatcher.model.complaint.AnimalComplaint;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
+import br.cin.ufpe.healthwatcher.model.complaint.FoodComplaint;
+import br.cin.ufpe.healthwatcher.model.complaint.SpecialComplaint;
 
 @ManagedBean
 @RequestScoped
@@ -25,6 +29,12 @@ public class SearchComplaintRecord implements Serializable {
 	
 	private int complaintCode;
 	private Complaint complaint;
+	private FoodComplaint foodComplaint;
+	private AnimalComplaint animalComplaint;
+	private SpecialComplaint specialComplaint;
+	
+	private List<Complaint> complaints;
+	private HealthWatcherFacade facade;
 	
 	public int getComplaintCode() {
 		return complaintCode;
@@ -34,46 +44,28 @@ public class SearchComplaintRecord implements Serializable {
 		this.complaintCode = complaintCode;
 	}
 
-	private List<Complaint> complaints;
-	private boolean foodComplaintFlag = false;
-	private boolean animalComplaintFlag = false;
-	private boolean specialComplaintFlag = false;
-	private boolean noDataFound;
-	private HealthWatcherFacade facade;
-	
-	public boolean isFoodComplaintFlag() {
-		return foodComplaintFlag;
+	public FoodComplaint getFoodComplaint() {
+		return foodComplaint;
 	}
 
-	public void setFoodComplaintFlag(boolean foodComplaintFlag) {
-		this.foodComplaintFlag = foodComplaintFlag;
+	public void setFoodComplaint(FoodComplaint foodComplaint) {
+		this.foodComplaint = foodComplaint;
 	}
 
-	public boolean isAnimalComplaintFlag() {
-		return animalComplaintFlag;
+	public AnimalComplaint getAnimalComplaint() {
+		return animalComplaint;
 	}
 
-	public void setAnimalComplaintFlag(boolean animalComplaintFlag) {
-		this.animalComplaintFlag = animalComplaintFlag;
+	public void setAnimalComplaint(AnimalComplaint animalComplaint) {
+		this.animalComplaint = animalComplaint;
 	}
 
-	public boolean isSpecialComplaintFlag() {
-		return specialComplaintFlag;
+	public SpecialComplaint getSpecialComplaint() {
+		return specialComplaint;
 	}
 
-	public void setSpecialComplaintFlag(boolean specialComplaintFlag) {
-		this.specialComplaintFlag = specialComplaintFlag;
-	}
-
-	public boolean isNoDataFound() {
-		if(this.complaints!=null){
-			noDataFound = this.complaints.size() == 0;
-		}
-		return noDataFound;
-	}
-
-	public void setNoDataFound(boolean noDataFound) {
-		this.noDataFound = noDataFound;
+	public void setSpecialComplaint(SpecialComplaint specialComplaint) {
+		this.specialComplaint = specialComplaint;
 	}
 
 	public List<Complaint> getComplaints() {
@@ -99,14 +91,13 @@ public class SearchComplaintRecord implements Serializable {
 	
 	public String search(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		Complaint complaint;
 		try {
 			if(facade==null){
 				facade = HealthWatcherFacade.getInstance();
 			}
-			complaint = facade.getfCid().searchComplaint(complaintCode);
+			this.complaint = facade.getfCid().searchComplaint(complaintCode);
 			facesContext.getExternalContext().getFlash().put("complaint", complaint.getCodigo());
-			return "updateSearchComplaint?faces-redirect=true";			
+			return "searchComplaintData?faces-redirect=true";			
 		} catch (RepositoryException | ObjectNotFoundException | IOException | PersistenceMechanismException
 				| TransactionException e) {
 			e.printStackTrace();
@@ -115,11 +106,58 @@ public class SearchComplaintRecord implements Serializable {
 	}
 
 	public Complaint getComplaint() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if(complaint==null){
+			int code = (int) facesContext.getExternalContext().getFlash().get("complaint");
+			try {
+				if(facade==null){
+					facade = HealthWatcherFacade.getInstance();
+				}
+				this.complaint = facade.getfCid().getComplaintRecord().search(code);
+			} catch (RepositoryException | ObjectNotFoundException | PersistenceMechanismException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(validFoodComplaint()){
+			this.foodComplaint = (FoodComplaint) complaint;
+		} else if(validAnimalComplaint()){
+			this.animalComplaint = (AnimalComplaint) complaint;
+		} else if(validSpecialComplaint()) {
+			this.specialComplaint = (SpecialComplaint) complaint;
+		}
 		return complaint;
 	}
 
 	public void setComplaint(Complaint complaint) {
 		this.complaint = complaint;
 	}
+	
+	public String updateComplaint(){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		try {
+			if(facade==null){
+				facade = HealthWatcherFacade.getInstance();
+			}
+			facade.getfCid().getComplaintRecord().update(complaint);
+			facesContext.getExternalContext().getFlash().put("complaint", complaint.getCodigo());
+			return "updateSearchComplaintData?faces-redirect=true";			
+		} catch (RepositoryException | ObjectNotFoundException | IOException | PersistenceMechanismException
+				| ObjectNotValidException e) {
+			e.printStackTrace();
+		}
+		return "";	
+	}
+	
+	public boolean validFoodComplaint(){
+		return this.complaint instanceof FoodComplaint ? true : false;
+	}
+	
+	public boolean validSpecialComplaint() {
+		return this.complaint instanceof SpecialComplaint ? true : false;
+	}
+
+	public boolean validAnimalComplaint() {
+		return this.complaint instanceof AnimalComplaint ? true : false;
+	}	
 
 }
