@@ -1,11 +1,16 @@
 package br.cin.ufpe.healthwatcher.data.rdb;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import lib.exceptions.CommunicationException;
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.RepositoryException;
 import lib.persistence.IPersistenceMechanism;
 import lib.persistence.PersistenceMechanism;
+import lib.util.ConcreteIterator;
 import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.data.IComplaintRepository;
 import br.cin.ufpe.healthwatcher.model.complaint.AnimalComplaint;
@@ -15,10 +20,16 @@ import br.cin.ufpe.healthwatcher.model.complaint.SpecialComplaint;
 
 public class ComplaintRepositoryRDB implements IComplaintRepository {
 	
-	private IPersistenceMechanism pm;
+	private IPersistenceMechanism mp;
+	private FoodComplaintRepositoryRDB foodRepositoryRDB;
+	private AnimalComplaintRepositoryRDB animalRepositoryRDB;
+	private SpecialComplaintRepositoryRDB specialRepositoryRDB;
 
-	public ComplaintRepositoryRDB(PersistenceMechanism pm) {
-		this.pm = pm;
+	public ComplaintRepositoryRDB(PersistenceMechanism mp) {
+		this.mp = mp;
+		this.foodRepositoryRDB 		= new FoodComplaintRepositoryRDB((PersistenceMechanism) this.mp);
+		this.animalRepositoryRDB 	= new AnimalComplaintRepositoryRDB((PersistenceMechanism) this.mp);
+		this.specialRepositoryRDB 	= new SpecialComplaintRepositoryRDB((PersistenceMechanism) this.mp);
 	}
 
 	@Override
@@ -26,14 +37,11 @@ public class ComplaintRepositoryRDB implements IComplaintRepository {
 			ObjectAlreadyInsertedException, ObjectNotValidException,
 			RepositoryException {
 		if(complaint instanceof FoodComplaint){
-			FoodComplaintRepositoryRDB foodRepositoryRDB = new FoodComplaintRepositoryRDB((PersistenceMechanism) this.pm);
 			return foodRepositoryRDB.insert((FoodComplaint) complaint);
 		} else if(complaint instanceof AnimalComplaint){
-			AnimalComplaintRepositoryRDB animalRepositoryRDB = new AnimalComplaintRepositoryRDB((PersistenceMechanism) this.pm);
 			return animalRepositoryRDB.insert((AnimalComplaint) complaint);
 		} else if(complaint instanceof SpecialComplaint){
-			SpecialComplaintRepositoryRDB specialRepository = new SpecialComplaintRepositoryRDB((PersistenceMechanism) this.pm);
-			return specialRepository.insert((SpecialComplaint) complaint);
+			return specialRepositoryRDB.insert((SpecialComplaint) complaint);
 		}
 		return 0;
 	}
@@ -43,42 +51,47 @@ public class ComplaintRepositoryRDB implements IComplaintRepository {
 			ObjectNotFoundException, ObjectNotValidException,
 			RepositoryException {
 		if(complaint instanceof FoodComplaint){
-			FoodComplaintRepositoryRDB foodRepositoryRDB = new FoodComplaintRepositoryRDB((PersistenceMechanism) this.pm);
 			foodRepositoryRDB.update((FoodComplaint) complaint);
 		} else if(complaint instanceof AnimalComplaint){
-			AnimalComplaintRepositoryRDB animalRepositoryRDB = new AnimalComplaintRepositoryRDB((PersistenceMechanism) this.pm);
 			animalRepositoryRDB.update((AnimalComplaint) complaint);
 		} else if(complaint instanceof SpecialComplaint){
-			SpecialComplaintRepositoryRDB specialRepository = new SpecialComplaintRepositoryRDB((PersistenceMechanism) this.pm);
-			specialRepository.update((SpecialComplaint) complaint);
+			specialRepositoryRDB.update((SpecialComplaint) complaint);
 		}	
 	}
 
 	@Override
 	public boolean exists(int code) throws RepositoryException {
-		// TODO Auto-generated method stub
-		return false;
+		Complaint c = null;
+		try {
+			c = search(code);
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+		}
+		return c != null;
 	}
 
 	@Override
 	public void remove(int code) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
-		
+		Complaint c = search(code);
+		if(c instanceof FoodComplaint){
+			foodRepositoryRDB.remove(code);
+		} else if(c instanceof AnimalComplaint){
+			animalRepositoryRDB.remove(code);
+		} else if(c instanceof SpecialComplaint){
+			specialRepositoryRDB.remove(code);
+		}
 	}
 
 	@Override
 	public Complaint search(int code) throws ObjectNotFoundException,
 			RepositoryException {
 		Complaint complaint = null;
-		FoodComplaintRepositoryRDB foodRepositoryRDB = new FoodComplaintRepositoryRDB((PersistenceMechanism) this.pm);
 		complaint = foodRepositoryRDB.search(code);
 		if(complaint==null){
-			AnimalComplaintRepositoryRDB animalRepositoryRDB = new AnimalComplaintRepositoryRDB((PersistenceMechanism) this.pm);
 			complaint = animalRepositoryRDB.search(code);
 			if(complaint==null){
-				SpecialComplaintRepositoryRDB specialRepository = new SpecialComplaintRepositoryRDB((PersistenceMechanism) this.pm);
-				complaint = specialRepository.search(code);
+				complaint = specialRepositoryRDB.search(code);
 			}
 		}
 		return complaint;
@@ -87,8 +100,26 @@ public class ComplaintRepositoryRDB implements IComplaintRepository {
 	@Override
 	public IteratorDsk getComplaintList() throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		IteratorDsk itFood = foodRepositoryRDB.getComplaintList();
+		IteratorDsk itAnimal = animalRepositoryRDB.getComplaintList();
+		IteratorDsk itSpecial = specialRepositoryRDB.getComplaintList();
+		
+		List<Complaint> allComplaints = new ArrayList<Complaint>();
+		try {
+			while(itFood.hasNext()){
+				allComplaints.add((Complaint) itFood.next());
+			}
+			while(itAnimal.hasNext()){
+				allComplaints.add((Complaint) itAnimal.next());
+			}
+			while(itSpecial.hasNext()){
+				allComplaints.add((Complaint) itSpecial.next());
+			}
+
+		} catch (CommunicationException e) {
+			e.printStackTrace();
+		}
+		return new ConcreteIterator(allComplaints);
 	}
 
 }

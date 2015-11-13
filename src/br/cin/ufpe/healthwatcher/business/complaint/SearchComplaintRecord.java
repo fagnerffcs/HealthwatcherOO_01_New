@@ -3,14 +3,14 @@ package br.cin.ufpe.healthwatcher.business.complaint;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import lib.exceptions.ObjectNotFoundException;
-import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
 import lib.exceptions.TransactionException;
@@ -19,15 +19,17 @@ import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.complaint.AnimalComplaint;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
 import br.cin.ufpe.healthwatcher.model.complaint.FoodComplaint;
+import br.cin.ufpe.healthwatcher.model.complaint.Situacao;
 import br.cin.ufpe.healthwatcher.model.complaint.SpecialComplaint;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class SearchComplaintRecord implements Serializable {
 
 	private static final long serialVersionUID = -6887424307646650506L;
 	
 	private int complaintCode;
+	private String complaintKind;
 	private Complaint complaint;
 	private FoodComplaint foodComplaint;
 	private AnimalComplaint animalComplaint;
@@ -108,22 +110,27 @@ public class SearchComplaintRecord implements Serializable {
 	public Complaint getComplaint() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if(complaint==null){
-			int code = (int) facesContext.getExternalContext().getFlash().get("complaint");
+			Integer code = (Integer) facesContext.getExternalContext().getFlash().get("complaint");
 			try {
 				if(facade==null){
 					facade = HealthWatcherFacade.getInstance();
 				}
-				this.complaint = facade.searchComplaint(code);
+				if(code!=null){
+					this.complaint = facade.searchComplaint(code);
+				}
 			} catch (RepositoryException | ObjectNotFoundException | PersistenceMechanismException | IOException | TransactionException e) {
 				e.printStackTrace();
 			}
 		}
 		if(validFoodComplaint()){
 			this.foodComplaint = (FoodComplaint) complaint;
+			this.complaintKind = "Food";
 		} else if(validAnimalComplaint()){
 			this.animalComplaint = (AnimalComplaint) complaint;
+			this.complaintKind = "Animal";
 		} else if(validSpecialComplaint()) {
 			this.specialComplaint = (SpecialComplaint) complaint;
+			this.complaintKind = "Special";
 		}
 		return complaint;
 	}
@@ -132,20 +139,30 @@ public class SearchComplaintRecord implements Serializable {
 		this.complaint = complaint;
 	}
 	
-	public String updateComplaint(){
+	public String updateSearchComplaint(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		try {
 			if(facade==null){
 				facade = HealthWatcherFacade.getInstance();
 			}
-			facade.getfCid().getComplaintRecord().update(complaint);
 			facesContext.getExternalContext().getFlash().put("complaint", complaint.getCodigo());
-			return "updateSearchComplaintData?faces-redirect=true";			
-		} catch (RepositoryException | ObjectNotFoundException | IOException | PersistenceMechanismException
-				| ObjectNotValidException e) {
+			return "updateSearchComplaint?faces-redirect=true";			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "";	
+	}
+	
+	public String updateComplaint(){
+		try {
+			this.complaint.setSituacao(Situacao.CLOSED);
+			this.complaint.setDataParecer(new Date());
+			facade.updateComplaint(this.complaint);
+			return "updateSearchComplaintData?faces-redirect=true";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 	public boolean validFoodComplaint(){
@@ -158,6 +175,14 @@ public class SearchComplaintRecord implements Serializable {
 
 	public boolean validAnimalComplaint() {
 		return this.complaint instanceof AnimalComplaint ? true : false;
+	}
+
+	public String getComplaintKind() {
+		return complaintKind;
+	}
+
+	public void setComplaintKind(String complaintKind) {
+		this.complaintKind = complaintKind;
 	}	
 
 }

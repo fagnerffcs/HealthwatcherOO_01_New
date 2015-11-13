@@ -1,6 +1,7 @@
 package br.cin.ufpe.healthwatcher.data.rdb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -15,6 +16,7 @@ import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
 import lib.persistence.IPersistenceMechanism;
 import lib.persistence.PersistenceMechanism;
+import lib.util.ConcreteIterator;
 import lib.util.IteratorDsk;
 
 import org.slf4j.Logger;
@@ -140,11 +142,20 @@ public class SpecialComplaintRepositoryRDB implements Serializable, IComplaintRe
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IteratorDsk getComplaintList() throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em;
+		List<SpecialComplaint> lista = new ArrayList<SpecialComplaint>();
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			lista = em.createNamedQuery("allFoodComplaints").getResultList();
+		} catch(Exception e){
+			
+		}
+		
+		return new ConcreteIterator(lista);
 	}
 
 }
