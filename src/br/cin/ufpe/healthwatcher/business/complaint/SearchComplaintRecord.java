@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -37,6 +38,12 @@ public class SearchComplaintRecord implements Serializable {
 	
 	private List<Complaint> complaints;
 	private HealthWatcherFacade facade;
+	
+	@PostConstruct
+	public void init(){
+		this.complaint = new FoodComplaint();
+	}
+	
 	
 	public int getComplaintCode() {
 		return complaintCode;
