@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
@@ -17,8 +16,6 @@ import lib.util.ConcreteIterator;
 import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.data.IHealthUnitRepository;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
-import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
-import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class HealthUnitRepositoryRDB implements Serializable, IHealthUnitRepository {
 	
@@ -29,89 +26,70 @@ public class HealthUnitRepositoryRDB implements Serializable, IHealthUnitReposit
 		this.mp = mp;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<HealthUnit> listAllHealthUnits(){
-		EntityManager em = new JPAUtil().getEntityManager();
-		List<HealthUnit> lista = em.createNamedQuery("allHealthUnits").getResultList();
-		em.close();
-		return lista;
-	}
-	
-	public List<MedicalSpecialty> listSpecialties(Integer code){
-		EntityManager em = new JPAUtil().getEntityManager();
-		try{
-			HealthUnit healthUnit = (HealthUnit) em.createNamedQuery("healthUnitByName").setParameter("code", code).getSingleResult();
-			return healthUnit.getSpecialities();
-		} catch	(NoResultException nre){
-			return null;
-		} finally {
-			em.close();
-		}
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<HealthUnit> healthUnitsBySpecialty(Integer code){
-		EntityManager em = new JPAUtil().getEntityManager();
-		try{
-			List<HealthUnit> lista = em.createNamedQuery("healthUnitsBySpecialty").setParameter("code", code).getResultList();
-			return lista;
-		} catch	(NoResultException nre){
-			return null;
-		} finally {
-			em.close();
-		}
-		
-	}
-
-	public HealthUnit find(String value) {
-		EntityManager em = new JPAUtil().getEntityManager();
-		HealthUnit hu = em.find(HealthUnit.class, Integer.parseInt(value));
-		em.close();
-		return hu;
-	}
-	
-	public void update(HealthUnit healthUnit){
-		EntityManager em = new JPAUtil().getEntityManager();
-		em.getTransaction().begin();
-		em.merge(healthUnit);
-		em.getTransaction().commit();
-		em.close();
-	}
-
 	@Override
 	public void insert(HealthUnit us) throws ObjectNotValidException,
 			ObjectAlreadyInsertedException, ObjectNotValidException,
 			RepositoryException {
-		// TODO Auto-generated method stub
-		
+		EntityManager em;
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			em.persist(us);
+		} catch (Exception e){
+			
+		}		
 	}
 
 	@Override
 	public boolean exists(int num) throws RepositoryException {
-		// TODO Auto-generated method stub
-		return false;
+		HealthUnit us = null;
+		try{
+			us = search(num);
+		}catch(Exception e){
+			
+		}
+		return us != null;
 	}
 
 	@Override
 	public void remove(int code) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
+		EntityManager em;
+		HealthUnit us = search(code);
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			em.remove(us);
+		} catch (Exception e){
+			
+		}
 		
 	}
 
 	@Override
 	public HealthUnit search(int code) throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
+		EntityManager em;
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			return em.find(HealthUnit.class, code);
+		} catch (Exception e){
+			
+		}
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IteratorDsk getHealthUnitList() throws ObjectNotFoundException,
 			RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em;
+		List<HealthUnit> lista = new ArrayList<HealthUnit>(); 
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			lista = em.createNamedQuery("allHealthUnits").getResultList();
+		} catch (Exception e){
+			
+		}
+		return new ConcreteIterator(lista);
 	}
 
 	@Override
@@ -134,6 +112,19 @@ public class HealthUnitRepositoryRDB implements Serializable, IHealthUnitReposit
 			
 		}
 		return new ConcreteIterator(lista);
+	}
+
+	@Override
+	public void update(HealthUnit us) throws ObjectNotValidException,
+			ObjectNotFoundException, ObjectNotValidException,
+			RepositoryException {
+		EntityManager em;
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			em.merge(us);
+		} catch (Exception e){
+			
+		}	
 	}
 
 

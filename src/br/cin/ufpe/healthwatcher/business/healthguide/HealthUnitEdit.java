@@ -1,6 +1,7 @@
 package br.cin.ufpe.healthwatcher.business.healthguide;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,7 +9,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.cin.ufpe.healthwatcher.data.rdb.HealthUnitRepositoryRDB;
+import lib.exceptions.ObjectNotFoundException;
+import lib.exceptions.ObjectNotValidException;
+import lib.exceptions.RepositoryException;
+import lib.util.IteratorDsk;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
 
 @ManagedBean
@@ -19,16 +24,25 @@ public class HealthUnitEdit implements Serializable {
 	
 	private List<HealthUnit> healthUnits;
 	private HealthUnit selectedHealthUnit;
-	
-	private HealthUnitRepositoryRDB healthUnitRepositoryRDB = new HealthUnitRepositoryRDB();
+	private HealthWatcherFacade facade;
 	
 	@PostConstruct
 	private void init(){
 		Integer code = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("healthunit");
-		if(code!=null){
-			this.selectedHealthUnit = healthUnitRepositoryRDB.find(String.valueOf(code));
+		try{
+			facade = HealthWatcherFacade.getInstance();
+			if(code!=null){
+				this.selectedHealthUnit = facade.getfCid().getHealthUnitRecord().search(code);
+			}
+			IteratorDsk it = facade.getHealthUnitList();
+			List<HealthUnit> lista = new ArrayList<HealthUnit>();
+			while(it.hasNext()){
+				lista.add((HealthUnit) it.next());
+			}
+			this.healthUnits = lista;
+		} catch(Exception e) {
+				
 		}
-		this.healthUnits = healthUnitRepositoryRDB.listAllHealthUnits();
 	}
 
 	public List<HealthUnit> getHealthUnits() {
@@ -53,7 +67,19 @@ public class HealthUnitEdit implements Serializable {
 	}
 	
 	public String atualizar(){
-		healthUnitRepositoryRDB.update(selectedHealthUnit);
+		try{
+			facade = HealthWatcherFacade.getInstance();
+		} catch (Exception e) {
+			try {
+				facade.getfCid().getHealthUnitRecord().update(selectedHealthUnit);
+			} catch (RepositoryException e1) {
+				e1.printStackTrace();
+			} catch (ObjectNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (ObjectNotValidException e1) {
+				e1.printStackTrace();
+			}
+		}
 		return "updateHealthUnitData?faces-redirect=true";
 	}
 	

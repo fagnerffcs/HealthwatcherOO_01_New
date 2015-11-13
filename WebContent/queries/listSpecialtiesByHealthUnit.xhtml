@@ -6,11 +6,11 @@
    template="/WEB-INF/templates/template.xhtml">
    <ui:define name="content">
 	  <h1>Querie result</h1>
-   	  <p>Health unit: <h:outputLabel value="#{facade.healthUnitController.selectedHealthUnit.code}" /> </p>
+   	  <p>Health unit: <h:outputLabel value="#{facade.fCid.healthUnitRecord.selectedHealthUnit.code}" /> </p>
    	  
    	  <p>
    	    <h:outputLabel value="Especialties :" style="font-weight: bold;" />
-		<h:dataTable styleClass="specialtyTable" value="#{facade.healthUnitController.specialities}" var="specialty" >
+		<h:dataTable styleClass="specialtyTable" value="#{facade.fCid.healthUnitRecord.selectedHealthUnit.specialities}" var="specialty" >
 		
 			<h:column>
 				<h:outputLabel value="#{specialty.description}" />

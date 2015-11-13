@@ -12,10 +12,10 @@
 	  <h:form>
 	  	 <h:panelGrid columns="1">
 			  <h:selectOneMenu value="#{facade.fCid.healthUnitRecord.selectedHealthUnit}" converter="#{healthUnitConverter}">
-			  	<f:selectItems value="#{facade.getPartialHealthUnitList()}" var="hu" itemValue="#{hu}" itemLabel="#{hu.description}" />
+			  	<f:selectItems value="#{facade.fCid.healthUnitRecord.getSearchHealthUnitList()}" var="hu" itemValue="#{hu}" itemLabel="#{hu.description}" />
 			  </h:selectOneMenu>
 			
-			  <h:commandButton action="#{facade.getPartialHealthUnitList()}" value="Consultar" />
+			  <h:commandButton action="#{facade.fCid.healthUnitRecord.searchSpecialties()}" value="Consultar" />
 			  
 			  <h:messages id="messages" styleClass="messages" />
 		  </h:panelGrid>  

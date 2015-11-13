@@ -9,16 +9,23 @@ import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 
 public interface ISpecialityRepository {
 
-	public void insert(MedicalSpecialty esp) throws ObjectNotValidException, ObjectAlreadyInsertedException, ObjectNotValidException, RepositoryException;
+	public void insert(MedicalSpecialty esp) throws ObjectNotValidException,
+			ObjectAlreadyInsertedException, ObjectNotValidException,
+			RepositoryException;
 
-	public void update(MedicalSpecialty esp) throws ObjectNotValidException, ObjectNotFoundException, ObjectNotValidException, RepositoryException;
+	public void update(MedicalSpecialty esp) throws ObjectNotValidException,
+			ObjectNotFoundException, ObjectNotValidException,
+			RepositoryException;
 
 	public boolean exists(int num) throws RepositoryException;
 
-	public void remove(int codigo) throws ObjectNotFoundException, RepositoryException;
+	public void remove(int codigo) throws ObjectNotFoundException,
+			RepositoryException;
 
-	public IteratorDsk getSpecialityList() throws ObjectNotFoundException, RepositoryException;
+	public IteratorDsk getSpecialityList() throws ObjectNotFoundException,
+			RepositoryException;
 
-	public MedicalSpecialty search(int codigo) throws ObjectNotFoundException, RepositoryException;
+	public MedicalSpecialty search(int codigo) throws ObjectNotFoundException,
+			RepositoryException;
 
 }

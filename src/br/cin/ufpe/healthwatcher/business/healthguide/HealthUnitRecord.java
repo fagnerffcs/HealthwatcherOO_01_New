@@ -1,10 +1,15 @@
 package br.cin.ufpe.healthwatcher.business.healthguide;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+import lib.exceptions.CommunicationException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.RepositoryException;
@@ -21,12 +26,26 @@ public class HealthUnitRecord implements Serializable {
 
 	private HealthUnit selectedHealthUnit;
 	private IHealthUnitRepository healthUnitRep;
+	private List<HealthUnit> healthUnits;
 	
+	public List<HealthUnit> getHealthUnits() {
+		return healthUnits;
+	}
+
 	public HealthUnitRecord(IHealthUnitRepository repUnidadeSaude){
 		this.healthUnitRep = repUnidadeSaude;
 	}
 
 	public HealthUnit getSelectedHealthUnit() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Integer code = (Integer) facesContext.getExternalContext().getFlash().get("healthUnitCode");
+		if(code!=null){
+			try {
+				selectedHealthUnit = this.healthUnitRep.search(code);
+			} catch (ObjectNotFoundException | RepositoryException e) {
+				e.printStackTrace();
+			}
+		}
 		return selectedHealthUnit;
 	}
 
@@ -63,6 +82,31 @@ public class HealthUnitRecord implements Serializable {
 	public HealthUnit search(int healthUnitCode)
 			throws ObjectNotFoundException, RepositoryException {
 		return healthUnitRep.search(healthUnitCode);
+	}
+	
+	public List<HealthUnit> getSearchHealthUnitList(){
+		List<HealthUnit> lista = new ArrayList<HealthUnit>();
+		try {
+			IteratorDsk it = healthUnitRep.getHealthUnitList();
+			while(it.hasNext()){
+				lista.add((HealthUnit) it.next());
+			}
+		} catch (ObjectNotFoundException | RepositoryException | CommunicationException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public String searchSpecialties(){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if(selectedHealthUnit!=null){
+			facesContext.getExternalContext().getFlash().put("healthUnitCode", this.selectedHealthUnit.getCode());
+			return "listSpecialtiesByHealthUnit?faces-redirect=true";
+		} else {
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Selecione um health unit.", "Erro ao selecionar."));
+            return "";
+		}
 	}
 
 }
