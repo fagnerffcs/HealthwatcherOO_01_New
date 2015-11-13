@@ -58,7 +58,7 @@ public class HealthUnitRecord implements Serializable {
 		healthUnitRep.update(unit);
 	}
 
-	public IteratorDsk searchSpecialityByHealthUnit(int code)
+	public IteratorDsk searchSpecialitiesByHealthUnit(int code)
 			throws ObjectNotFoundException, RepositoryException {
 		HealthUnit us = healthUnitRep.search(code);
 		return new ConcreteIterator(us.getSpecialities());

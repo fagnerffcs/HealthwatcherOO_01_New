@@ -1,11 +1,10 @@
 package br.cin.ufpe.healthwatcher.data.mem;
 
-import java.util.List;
-
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.RepositoryException;
+import lib.util.IteratorDsk;
 import br.cin.ufpe.healthwatcher.data.IDiseaseRepository;
 import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 
@@ -41,7 +40,7 @@ public class DiseaseTypeRepositoryArray implements IDiseaseRepository {
 	}
 
 	@Override
-	public List<DiseaseType> getDiseaseTypeList()
+	public IteratorDsk getDiseaseTypeList()
 			throws ObjectNotFoundException, RepositoryException {
 		// TODO Auto-generated method stub
 		return null;

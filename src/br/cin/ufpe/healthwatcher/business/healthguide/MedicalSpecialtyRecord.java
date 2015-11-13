@@ -111,7 +111,11 @@ public class MedicalSpecialtyRecord implements Serializable {
 		}
 	}
 
-	public List<MedicalSpecialty> getListaEspecialidade() throws RepositoryException,	ObjectNotFoundException, TransactionException {
+	public IteratorDsk getListaEspecialidade() throws RepositoryException,	ObjectNotFoundException, TransactionException {
+		return this.repEspecialidade.getSpecialityList();
+	}
+	
+	public List<MedicalSpecialty> getListaEspecialidadeAsList() throws RepositoryException,	ObjectNotFoundException, TransactionException {
 		IteratorDsk medSpecialtyIterator = this.repEspecialidade.getSpecialityList();
 		List<MedicalSpecialty> lista = new ArrayList<MedicalSpecialty>();
 		try {
@@ -122,7 +126,7 @@ public class MedicalSpecialtyRecord implements Serializable {
 			e.printStackTrace();
 		}
 		return lista;
-	}
+	}	
 	
 
 }

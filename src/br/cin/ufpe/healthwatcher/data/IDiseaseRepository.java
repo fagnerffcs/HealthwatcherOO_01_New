@@ -1,12 +1,11 @@
 package br.cin.ufpe.healthwatcher.data;
 
-import java.util.List;
-
-import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.RepositoryException;
+import lib.util.IteratorDsk;
+import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 
 public interface IDiseaseRepository {
 
@@ -23,6 +22,6 @@ public interface IDiseaseRepository {
 	public DiseaseType search(int code) throws ObjectNotFoundException,
 			RepositoryException;
 
-	public List<DiseaseType> getDiseaseTypeList() throws ObjectNotFoundException, RepositoryException;
+	public IteratorDsk getDiseaseTypeList() throws ObjectNotFoundException, RepositoryException;
 
 }

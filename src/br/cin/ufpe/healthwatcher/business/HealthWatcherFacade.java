@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 
 import lib.exceptions.InsertEntryException;
 import lib.exceptions.ObjectAlreadyInsertedException;
@@ -26,7 +24,7 @@ import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
 
 @ManagedBean(name="facade")
 @ApplicationScoped
-public class HealthWatcherFacade implements IFacade, ServletContextListener {
+public class HealthWatcherFacade implements IFacade {
 	
 	private static HealthWatcherFacade singleton; //padrao singleton
 	
@@ -96,60 +94,52 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	public void updateComplaint(Complaint q) throws TransactionException,
 			RepositoryException, ObjectNotFoundException,
 			ObjectNotValidException {
-		// TODO Auto-generated method stub
-		
+		fCid.getComplaintRecord().update(q);
 	}
 
 	@Override
 	public IteratorDsk searchSpecialitiesByHealthUnit(int code)
 			throws ObjectNotFoundException, RepositoryException,
 			TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getHealthUnitRecord().searchSpecialitiesByHealthUnit(code);
 	}
 
 	@Override
 	public Complaint searchComplaint(int code) throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getComplaintRecord().searchComplaint(code);
 	}
 
 	@Override
 	public DiseaseType searchDiseaseType(int code) throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getDiseaseRecord().searchDiseaseType(code);
 	}
 
 	@Override
 	public IteratorDsk searchHealthUnitsBySpeciality(int code)
 			throws ObjectNotFoundException, RepositoryException,
 			TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getHealthUnitRecord().searchHealthUnitsBySpeciality(code);
 	}
 
 	@Override
 	public IteratorDsk getSpecialityList()
 			throws RepositoryException, ObjectNotFoundException,
 			TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getSpecialityList();
 	}
 
 	@Override
 	public IteratorDsk getDiseaseTypeList() throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return (IteratorDsk) fCid.getDiseaseTypeList();
 	}
 
 	@Override
 	public IteratorDsk getHealthUnitList() throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getHealthUnitList();
 	}
 
 	@Override
@@ -169,30 +159,26 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	@Override
 	public void updateHealthUnit(HealthUnit unit) throws RepositoryException,
 			TransactionException, ObjectNotFoundException {
-		// TODO Auto-generated method stub
-		
+		fCid.updateHealthUnit(unit);
 	}
 
 	@Override
 	public IteratorDsk getComplaintList() throws ObjectNotFoundException,
 			TransactionException {
-		// TODO Auto-generated method stub
-		return null;
+		return fCid.getComplaintList();
 	}
 
 	@Override
 	public void insert(Employee e) throws ObjectAlreadyInsertedException,
 			ObjectNotValidException, InsertEntryException, TransactionException {
-		// TODO Auto-generated method stub
-		
+		fCid.insert(e);
 	}
 
 	@Override
 	public void updateEmployee(Employee e) throws TransactionException,
 			RepositoryException, ObjectNotFoundException,
 			ObjectNotValidException, UpdateEntryException {
-		// TODO Auto-generated method stub
-		
+		fCid.update(e);
 	}
 
 	@Override
@@ -205,20 +191,7 @@ public class HealthWatcherFacade implements IFacade, ServletContextListener {
 	@Override
 	public HealthUnit searchHealthUnit(int healthUnitCode)
 			throws ObjectNotFoundException, RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
-		System.out.println("Instanciando a classe " + HealthWatcherFacade.class);
-		singleton = new HealthWatcherFacade();
+		return fCid.searchHealthUnit(healthUnitCode);
 	}
 	
 }

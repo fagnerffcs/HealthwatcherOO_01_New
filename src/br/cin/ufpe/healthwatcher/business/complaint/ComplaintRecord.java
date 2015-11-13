@@ -26,7 +26,7 @@ public class ComplaintRecord implements Serializable {
 		this.complaintRep = rep;
 	}
 
-	public Complaint search(int code) throws RepositoryException,
+	public Complaint searchComplaint(int code) throws RepositoryException,
 			ObjectNotFoundException {
 		return complaintRep.search(code);
 	}

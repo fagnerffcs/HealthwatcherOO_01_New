@@ -1,7 +1,6 @@
 package br.cin.ufpe.healthwatcher.business;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -39,7 +38,6 @@ import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
 import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 import br.cin.ufpe.healthwatcher.model.employee.Employee;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
-import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 
 @ManagedBean(name="fCid")
 @ApplicationScoped
@@ -174,7 +172,7 @@ public class HealthWatcherFacadeInit implements Serializable {
 		IteratorDsk lista = null;
 		try {
 			getPm().beginTransaction();
-			lista = healthUnitRecord.searchSpecialityByHealthUnit(code);
+			lista = healthUnitRecord.searchSpecialitiesByHealthUnit(code);
 			getPm().commitTransaction();
 		} catch (RepositoryException e) {
 			getPm().rollbackTransaction();
@@ -194,7 +192,7 @@ public class HealthWatcherFacadeInit implements Serializable {
 		Complaint q = null;
 		try {
 			getPm().beginTransaction();
-			q = this.complaintRecord.search(code);
+			q = this.complaintRecord.searchComplaint(code);
 			getPm().commitTransaction();
 		} catch (RepositoryException e) {
 			getPm().rollbackTransaction();
@@ -216,7 +214,7 @@ public class HealthWatcherFacadeInit implements Serializable {
 		DiseaseType tp = null;
 		try {
 			getPm().beginTransaction();
-			tp = this.diseaseRecord.search(code);
+			tp = this.diseaseRecord.searchDiseaseType(code);
 			getPm().commitTransaction();
 		} catch (RepositoryException e) {
 			getPm().rollbackTransaction();
@@ -256,13 +254,13 @@ public class HealthWatcherFacadeInit implements Serializable {
 		return lista;
 	}
 
-	public List<MedicalSpecialty> getSpecialityList()
+	public IteratorDsk getSpecialityList()
 			throws RepositoryException, ObjectNotFoundException,
 			TransactionException {
-		List<MedicalSpecialty> lista = null;
+		IteratorDsk iterator = null;
 		try {
 			getPm().beginTransaction();
-			lista = specialityRecord.getListaEspecialidade();
+			iterator = specialityRecord.getListaEspecialidade();
 			getPm().commitTransaction();
 		} catch (RepositoryException e) {
 			getPm().rollbackTransaction();
@@ -276,15 +274,15 @@ public class HealthWatcherFacadeInit implements Serializable {
 		} catch (Exception e) {
 			getPm().rollbackTransaction();
 		}
-		return lista;
+		return iterator;
 	}
 
-	public List<DiseaseType> getDiseaseTypeList() throws RepositoryException,
+	public IteratorDsk getDiseaseTypeList() throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
-		List<DiseaseType> lista = null;
+		IteratorDsk iterator = null;
 		try {
 			getPm().beginTransaction();
-			lista = this.diseaseRecord.getDiseaseTypeList();
+			iterator = this.diseaseRecord.getDiseaseTypeList();
 			getPm().commitTransaction();
 		} catch (RepositoryException e) {
 			getPm().rollbackTransaction();
@@ -298,7 +296,7 @@ public class HealthWatcherFacadeInit implements Serializable {
 		} catch (Exception e) {
 			getPm().rollbackTransaction();
 		}
-		return lista;
+		return iterator;
 	}
 
 	public HealthUnit searchHealthUnit(int healthUnitCode)

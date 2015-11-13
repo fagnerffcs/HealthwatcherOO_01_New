@@ -113,8 +113,8 @@ public class SearchComplaintRecord implements Serializable {
 				if(facade==null){
 					facade = HealthWatcherFacade.getInstance();
 				}
-				this.complaint = facade.getfCid().getComplaintRecord().search(code);
-			} catch (RepositoryException | ObjectNotFoundException | PersistenceMechanismException | IOException e) {
+				this.complaint = facade.searchComplaint(code);
+			} catch (RepositoryException | ObjectNotFoundException | PersistenceMechanismException | IOException | TransactionException e) {
 				e.printStackTrace();
 			}
 		}
