@@ -5,6 +5,11 @@
    xmlns:h="http://java.sun.com/jsf/html"
    template="/WEB-INF/templates/template.xhtml">
    <ui:define name="content">
+   
+	  <f:metadata>
+		<f:viewParam name="complaint" value="#{updateComplaintRecord.complaint.codigo}" converter="#{complaintConverter}" />
+		<f:viewAction action="#{updateComplaintRecord.onLoad()}" />
+	  </f:metadata>	   
 	  
 	  <h:form id="form" style="text-align: center; margin: 10px;" >
   		  <h:messages id="messages" styleClass="messages" />
@@ -15,7 +20,7 @@
 			  <h:outputText value="Complaint updated" />
 		  </div>
 		  <div style="margin-top: 20px; text-align: left;">
-			  <!-- <h:outputText value="#{facade.fCid.searchComplaintRecord.complaint.observacao}" />	 -->
+			  <h:outputText value="#{updateComplaintRecord.complaint.observacao}" />
 		  </div>
 	  </h:form>   	  
 

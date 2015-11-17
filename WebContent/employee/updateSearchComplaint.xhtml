@@ -6,17 +6,22 @@
    template="/WEB-INF/templates/template.xhtml">
    <ui:define name="content">
 	  
+	  <f:metadata>
+		<f:viewParam name="complaint" value="#{updateComplaintRecord.complaint.codigo}" converter="#{complaintConverter}" />
+		<f:viewAction action="#{updateComplaintRecord.onLoad()}" />
+	  </f:metadata>	
+
 	  <h:form id="form" style="text-align: center; margin: 10px;" >
   		  <h:messages id="messages" styleClass="messages" />
-		  <h4>Complaint : <h:outputText value="#{facade.fCid.searchComplaintRecord.complaint.codigo}" /></h4>
-		  <h4>Complaint kind: <h:outputText value="#{facade.fCid.searchComplaintRecord.complaintKind}" /> </h4>
-		  <h4>Description: <h:outputText value="#{facade.fCid.searchComplaintRecord.complaint.descricao}" /></h4>
+		  <h4>Complaint : <h:outputText value="#{updateComplaintRecord.complaint.codigo}" /></h4>
+		  <h4>Complaint kind: <h:outputText value="#{updateComplaintRecord.complaintKind}" /> </h4>
+		  <h4>Description: <h:outputText value="#{updateComplaintRecord.complaint.descricao}" /></h4>
 
 	  	  <h4>Observation (complaint's solution):</h4>
-	  	  <h:inputTextarea value="#{facade.fCid.searchComplaintRecord.complaint.observacao}" rols="4" cols="25"  />
+	  	  <h:inputTextarea value="#{updateComplaintRecord.complaint.observacao}" rols="4" cols="25"  />
 
 		  <div>
-			  <h:commandButton action="#{facade.fCid.searchComplaintRecord.updateComplaint()}" value="Update" />
+			  <h:commandButton action="#{updateComplaintRecord.update(updateComplaintRecord.complaint)}" value="Update" />
 			  <h:commandButton type="reset" value="Clear" />
 		  </div>
 	  </h:form>   	  

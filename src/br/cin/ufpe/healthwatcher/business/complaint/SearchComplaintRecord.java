@@ -152,7 +152,7 @@ public class SearchComplaintRecord implements Serializable {
 			if(facade==null){
 				facade = HealthWatcherFacade.getInstance();
 			}
-			facesContext.getExternalContext().getFlash().put("complaint", complaint.getCodigo());
+			facesContext.getExternalContext().getFlash().put("complaintCode", complaint.getCodigo());
 			return "updateSearchComplaint?faces-redirect=true";			
 		} catch (Exception e) {
 			e.printStackTrace();

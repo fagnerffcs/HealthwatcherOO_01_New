@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
@@ -19,8 +20,8 @@ import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
 public class ComplaintRecord implements Serializable {
 
 	private static final long serialVersionUID = -6887424307646650506L;
-
 	private IComplaintRepository complaintRep;
+	private Complaint complaint;
 
 	public ComplaintRecord(IComplaintRepository rep) {
 		this.complaintRep = rep;
@@ -50,6 +51,17 @@ public class ComplaintRecord implements Serializable {
 			ObjectNotFoundException {
 		return complaintRep.getComplaintList();
 
+	}
+
+	public Complaint getComplaint() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Integer code = (Integer) facesContext.getExternalContext().getFlash().get("complaintCode");
+		try {
+			this.complaint = this.complaintRep.search(code);
+		} catch (ObjectNotFoundException | RepositoryException e) {
+			e.printStackTrace();
+		}
+		return complaint;
 	}
 
 }

@@ -94,33 +94,33 @@ public class HealthWatcherFacade implements IFacade {
 	public void updateComplaint(Complaint q) throws TransactionException,
 			RepositoryException, ObjectNotFoundException,
 			ObjectNotValidException {
-		fCid.getComplaintRecord().update(q);
+		fCid.updateComplaint(q);
 	}
 
 	@Override
 	public IteratorDsk searchSpecialitiesByHealthUnit(int code)
 			throws ObjectNotFoundException, RepositoryException,
 			TransactionException {
-		return fCid.getHealthUnitRecord().searchSpecialitiesByHealthUnit(code);
+		return fCid.searchSpecialitiesByHealthUnit(code);
 	}
 
 	@Override
 	public Complaint searchComplaint(int code) throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
-		return fCid.getComplaintRecord().searchComplaint(code);
+		return fCid.searchComplaint(code);
 	}
 
 	@Override
 	public DiseaseType searchDiseaseType(int code) throws RepositoryException,
 			ObjectNotFoundException, TransactionException {
-		return fCid.getDiseaseRecord().searchDiseaseType(code);
+		return fCid.searchDiseaseType(code);
 	}
 
 	@Override
 	public IteratorDsk searchHealthUnitsBySpeciality(int code)
 			throws ObjectNotFoundException, RepositoryException,
 			TransactionException {
-		return fCid.getHealthUnitRecord().searchHealthUnitsBySpeciality(code);
+		return fCid.searchHealthUnitsBySpeciality(code);
 	}
 
 	@Override

@@ -39,7 +39,7 @@ import br.cin.ufpe.healthwatcher.model.complaint.DiseaseType;
 import br.cin.ufpe.healthwatcher.model.employee.Employee;
 import br.cin.ufpe.healthwatcher.model.healthguide.HealthUnit;
 
-@ManagedBean(name="fCid")
+@ManagedBean(name = "fCid")
 @ApplicationScoped
 public class HealthWatcherFacadeInit implements Serializable {
 
@@ -47,7 +47,7 @@ public class HealthWatcherFacadeInit implements Serializable {
 
 	private AnimalComplaintRecord animalComplaintRecord;
 	private FoodComplaintRecord foodComplaintRecord;
-	private SpecialComplaintRecord specialComplaintRecord;	
+	private SpecialComplaintRecord specialComplaintRecord;
 	private ComplaintRecord complaintRecord;
 	private EmployeeLogin employeeLogin;
 	private EmployeeRecord employeeRecord;
@@ -55,7 +55,7 @@ public class HealthWatcherFacadeInit implements Serializable {
 	private MedicalSpecialtyRecord specialityRecord;
 	private SearchComplaintRecord searchComplaintRecord;
 	private DiseaseRecord diseaseRecord;
-	
+
 	public AnimalComplaintRecord getAnimalComplaintRecord() {
 		return animalComplaintRecord;
 	}
@@ -98,13 +98,14 @@ public class HealthWatcherFacadeInit implements Serializable {
 
 	public HealthWatcherFacadeInit() {
 		this.employeeLogin = new EmployeeLogin();
-		
-		this.foodComplaintRecord 	= new FoodComplaintRecord();
-		this.animalComplaintRecord 	= new AnimalComplaintRecord();
+
+		this.foodComplaintRecord = new FoodComplaintRecord();
+		this.animalComplaintRecord = new AnimalComplaintRecord();
 		this.specialComplaintRecord = new SpecialComplaintRecord();
-		
-		this.complaintRecord 		= new ComplaintRecord(new ComplaintRepositoryArray());
-		this.searchComplaintRecord 	= new SearchComplaintRecord();
+
+		this.complaintRecord = new ComplaintRecord(
+				new ComplaintRepositoryArray());
+		this.searchComplaintRecord = new SearchComplaintRecord();
 		if (Constants.isPersistent()) {
 			this.complaintRecord = new ComplaintRecord(
 					new ComplaintRepositoryRDB(
@@ -164,6 +165,27 @@ public class HealthWatcherFacadeInit implements Serializable {
 
 	public IPersistenceMechanism getPm() {
 		return HealthWatcherFacade.getPm();
+	}
+
+	public void updateComplaint(Complaint complaint)
+			throws TransactionException, RepositoryException,
+			ObjectNotFoundException, ObjectNotValidException {
+		try {
+			getPm().beginTransaction();
+			complaintRecord.update(complaint);
+			getPm().commitTransaction();
+		} catch (RepositoryException e) {
+			getPm().rollbackTransaction();
+			throw e;
+		} catch (ObjectNotFoundException e) {
+			getPm().rollbackTransaction();
+			throw e;
+		} catch (TransactionException e) {
+			getPm().rollbackTransaction();
+			throw e;
+		} catch (Exception e) {
+			getPm().rollbackTransaction();
+		}
 	}
 
 	public IteratorDsk searchSpecialitiesByHealthUnit(int code)
@@ -254,9 +276,8 @@ public class HealthWatcherFacadeInit implements Serializable {
 		return lista;
 	}
 
-	public IteratorDsk getSpecialityList()
-			throws RepositoryException, ObjectNotFoundException,
-			TransactionException {
+	public IteratorDsk getSpecialityList() throws RepositoryException,
+			ObjectNotFoundException, TransactionException {
 		IteratorDsk iterator = null;
 		try {
 			getPm().beginTransaction();
@@ -326,9 +347,8 @@ public class HealthWatcherFacadeInit implements Serializable {
 		return lista;
 	}
 
-	public IteratorDsk getPartialHealthUnitList()
-			throws RepositoryException, ObjectNotFoundException,
-			TransactionException {
+	public IteratorDsk getPartialHealthUnitList() throws RepositoryException,
+			ObjectNotFoundException, TransactionException {
 		IteratorDsk lista = null;
 		try {
 			getPm().beginTransaction();
