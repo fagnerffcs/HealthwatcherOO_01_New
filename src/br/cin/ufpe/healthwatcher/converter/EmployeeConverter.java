@@ -1,5 +1,6 @@
 package br.cin.ufpe.healthwatcher.converter;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
@@ -7,10 +8,15 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.persistence.PersistenceException;
 
 import lib.exceptions.ObjectNotFoundException;
+import lib.exceptions.ObjectNotValidException;
+import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
-import br.cin.ufpe.healthwatcher.data.rdb.EmployeeRepositoryRDB;
+import lib.exceptions.TransactionException;
+import lib.exceptions.UpdateEntryException;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.employee.Employee;
 
 @ManagedBean
@@ -19,18 +25,18 @@ public class EmployeeConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 391558762793887877L;
 	
-	private EmployeeRepositoryRDB employeeService = new EmployeeRepositoryRDB();
+	private HealthWatcherFacade facade;
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,	String value) {
 		if(value!=null){
 			Employee emp;
 			try {
-				emp = employeeService.search(value);
+				facade = HealthWatcherFacade.getInstance();
+				emp = facade.searchEmployee(value);
 				return emp;
-			} catch (ObjectNotFoundException e) {
-				e.printStackTrace();
-			} catch (RepositoryException e) {
+			} catch (ObjectNotFoundException | RepositoryException | PersistenceException | PersistenceMechanismException | 
+					 IOException | TransactionException | ObjectNotValidException | UpdateEntryException e) {
 				e.printStackTrace();
 			}
 		}
@@ -39,7 +45,10 @@ public class EmployeeConverter implements Converter, Serializable {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,	Object value) {
-		String login = String.valueOf(((Employee) value).getLogin());
+		String login = null;
+		if(value instanceof Employee){
+			login = String.valueOf(((Employee) value).getLogin());
+		}
 		return login;
 	}
 

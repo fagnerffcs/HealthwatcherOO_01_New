@@ -9,15 +9,15 @@
 	  	<h:messages styleClass="messages" />
 		<h:panelGrid columns="2" cellpadding="5">
 		    <h:outputLabel for="username" value="Name: * " />  
-		    <h:inputText id="username" value="#{facade.employeeController.employee.name}" required="true" requiredMessage="Campo obrigatório." />
+		    <h:inputText id="username" value="#{facade.fCid.employeeRecord.employee.name}" required="true" requiredMessage="Campo obrigatório." />
 
 		    <h:outputLabel for="login" value="Login: * " />  
-		    <h:inputText id="login" value="#{facade.employeeController.employee.login}" required="true" requiredMessage="Campo obrigatório." />
+		    <h:inputText id="login" value="#{facade.fCid.employeeRecord.employee.login}" required="true" requiredMessage="Campo obrigatório." />
 		      
 		    <h:outputLabel for="password" value="Password: * " requiredMessage="Campo obrigatório." />  
-		    <h:inputSecret id="password" value="#{facade.employeeController.employee.password}" required="true" requiredMessage="Campo obrigatório." />  
+		    <h:inputSecret id="password" value="#{facade.fCid.employeeRecord.employee.password}" required="true" requiredMessage="Campo obrigatório." />  
 		</h:panelGrid>
-		<h:commandButton value="Create" action="#{facade.employeeController.salvar()}" style="margin-left: 80px;" />
+		<h:commandButton value="Create" action="#{facade.fCid.employeeRecord.insert(facade.fCid.employeeRecord.employee)}" style="margin-left: 80px;" />
 		<h:commandButton type="reset" value="Clear" style="margin-left: 10px;" />
 	  </h:form>
    	  <center>

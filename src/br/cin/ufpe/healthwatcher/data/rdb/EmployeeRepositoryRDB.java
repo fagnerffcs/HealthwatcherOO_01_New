@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
+import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
 import lib.persistence.IPersistenceMechanism;
 
@@ -16,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import br.cin.ufpe.healthwatcher.data.IEmployeeRepository;
 import br.cin.ufpe.healthwatcher.model.employee.Employee;
-import br.cin.ufpe.healthwatcher.util.JPAUtil;
 
 public class EmployeeRepositoryRDB implements Serializable, IEmployeeRepository {
 
@@ -24,64 +24,84 @@ public class EmployeeRepositoryRDB implements Serializable, IEmployeeRepository 
 
 	private static Logger log = LoggerFactory.getLogger(EmployeeRepositoryRDB.class);
 	
-	@SuppressWarnings("unused")
-	private IPersistenceMechanism pm;
+	private IPersistenceMechanism mp;
 	
 	public EmployeeRepositoryRDB(){
 		
 	}
 
-	public EmployeeRepositoryRDB(IPersistenceMechanism pm) {
-		this.pm = pm;
+	public EmployeeRepositoryRDB(IPersistenceMechanism mp) {
+		this.mp = mp;
 	}	
 	
-	public void update(Employee employee) {
-		log.info("Atualizando " + employee.getName());
-		EntityManager em = new JPAUtil().getEntityManager();
-		em.getTransaction().begin();
-		em.merge(employee);
-		em.getTransaction().commit();
-		em.close();
-	}
-
 	@Override
 	public boolean exists(String login) throws RepositoryException {
-		// TODO Auto-generated method stub
+		try{
+			return search(login)!=null;
+		} catch(Exception e) {
+			
+		}
 		return false;
 	}
 
 	@Override
 	public void remove(String login) throws ObjectNotFoundException, RepositoryException {
-		// TODO Auto-generated method stub
-		
+		EntityManager em;
+		Employee employee = null; 
+		try{
+			employee = search(login);
+			log.info("Removendo employee " + employee.getName());
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			em.remove(employee);
+		} catch (ConstraintViolationException | PersistenceMechanismException cve) {
+			log.error("Erro ao excluir employee " + login);
+		}		
 	}
 
 	@Override
 	public Employee search(String login) throws ObjectNotFoundException, RepositoryException {
-		EntityManager em = new JPAUtil().getEntityManager();
-		Employee e = em.find(Employee.class, login);
-		em.close();
-		return e;
+		EntityManager em;
+		try{
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			Employee e = em.find(Employee.class, login);
+			return e;
+		}catch(Exception e) {
+			
+		}
+		return null;
 	}
 
 	@Override
 	public void insert(Employee employee) throws ObjectNotValidException,
 			ObjectAlreadyInsertedException, ObjectNotValidException,
 			RepositoryException {
-		EntityManager em = new JPAUtil().getEntityManager();
+		EntityManager em;
 		try{
 			log.info("Registrando employee " + employee.getName());
-			em.getTransaction().begin();
+			em = (EntityManager) this.mp.getCommunicationChannel();
 			employee.setEnable(true);
 			em.persist(employee);
-			em.getTransaction().commit();
-		} catch (ConstraintViolationException cve) {
+		} catch (ConstraintViolationException | PersistenceMechanismException cve) {
 			log.error("Erro ao inserir employee " + employee.getLogin());
 			throw new ObjectNotValidException();
-		} finally {
-			em.close();
 		}
 		
+	}
+
+	@Override
+	public void update(Employee employee) throws ObjectNotValidException,
+			ObjectNotFoundException, ObjectNotValidException,
+			RepositoryException {
+		EntityManager em;
+		try{
+			log.info("Atualizando employee " + employee.getName());
+			em = (EntityManager) this.mp.getCommunicationChannel();
+			employee.setEnable(true);
+			em.merge(employee);
+		} catch (ConstraintViolationException | PersistenceMechanismException cve) {
+			log.error("Erro ao inserir employee " + employee.getLogin());
+			throw new ObjectNotValidException();
+		}
 	}
 
 }	
