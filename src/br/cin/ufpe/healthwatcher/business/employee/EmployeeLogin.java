@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
@@ -98,6 +99,8 @@ public class EmployeeLogin implements Serializable {
 		properties.put("path", "/");
 		try {
 			facesContext.getExternalContext().addResponseCookie(name, URLEncoder.encode(value, "UTF-8"), properties);
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.setAttribute("login", login);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -105,6 +108,9 @@ public class EmployeeLogin implements Serializable {
 	
 	public String getCookie(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if(facesContext==null){
+			return null;
+		}
 		Cookie cookie = (Cookie) facesContext.getExternalContext().getRequestCookieMap().get("employeeName");
 		String value = null;
 		try {
@@ -117,11 +123,15 @@ public class EmployeeLogin implements Serializable {
 
 	public String logout() {
 		this.logged = false;
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		session.removeAttribute("login");
 		return "/home?faces-redirect=true";
 	}
 
 	public String changeLoggedUser() {
 		this.logged = false;
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		session.removeAttribute("login");		
 		return "/login?faces-redirect=true";
 	}	
 	

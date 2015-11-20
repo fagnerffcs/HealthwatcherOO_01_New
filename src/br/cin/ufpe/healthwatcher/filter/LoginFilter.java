@@ -10,8 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
+import javax.servlet.http.HttpSession;
 
 //TODO: rever a logica dessa classe apos o refactor
 public class LoginFilter implements Filter {
@@ -28,25 +27,21 @@ public class LoginFilter implements Filter {
 		
 		String url = req.getRequestURI();
 		
-		HealthWatcherFacade fachada = (HealthWatcherFacade) req.getSession().getAttribute("facade");
-		
 		//se nao tiver logado 
-		if(fachada == null){
-			if(url.indexOf("/employee/") >= 0){
-				res.sendRedirect(req.getServletContext().getContextPath()+"/login.jsf");
-			} else {
+		if(!url.contains("javax.faces.resource")) {
+			HttpSession session = ((HttpServletRequest) request).getSession(true);
+			String login = (String) session.getAttribute("login");
+			if(url.indexOf("login.jsf") > 0) {
 				chain.doFilter(request, response);
+			} else {
+				if(login == null && url.indexOf("/employee/") >= 0){
+					res.sendRedirect(req.getServletContext().getContextPath()+"/login.jsf");
+				} else {
+					chain.doFilter(request, response);
+				}
 			}
 		} else {
-			String login = (String) req.getSession().getAttribute("login");
-			if(login==null){
-				req.getSession().setAttribute("login", login);
-			}
-			if(url.indexOf("login.jsf") >= 0){
-				res.sendRedirect(req.getServletContext().getContextPath()+"/employee/menuEmployee.jsf");
-			} else {
-				chain.doFilter(request, response);
-			}
+			chain.doFilter(request, response);
 		}
 	}
 
