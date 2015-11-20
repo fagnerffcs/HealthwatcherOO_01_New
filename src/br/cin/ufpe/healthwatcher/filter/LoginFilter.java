@@ -31,7 +31,11 @@ public class LoginFilter implements Filter {
 			HttpSession session = ((HttpServletRequest) request).getSession(true);
 			String login = (String) session.getAttribute("login");
 			if(url.indexOf("login.jsf") > 0) {
-				chain.doFilter(request, response);
+				if(login!=null){
+					res.sendRedirect(req.getServletContext().getContextPath()+"/employee/menuEmployee.jsf");					
+				} else {
+					chain.doFilter(request, response);
+				}
 			} else {
 				if(login == null && url.indexOf("/employee/") >= 0){
 					res.sendRedirect(req.getServletContext().getContextPath()+"/login.jsf");
