@@ -8,7 +8,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import br.cin.ufpe.healthwatcher.data.rdb.SpecialtyRepositoryRDB;
+import lib.util.IteratorDsk;
+import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
 import br.cin.ufpe.healthwatcher.model.healthguide.MedicalSpecialty;
 
 @ManagedBean
@@ -17,16 +18,25 @@ public class MedicalSpecialtyConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 391558762793887877L;
 	
-	private SpecialtyRepositoryRDB specialtyRepositoryRDB = new SpecialtyRepositoryRDB();
+	private HealthWatcherFacade facade;
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,	String value) {
 		if(value!=null){
-			MedicalSpecialty ms = specialtyRepositoryRDB.find(Integer.parseInt(value));
-			return ms;
-		} else {
-			return null;
+			try{
+				facade = HealthWatcherFacade.getInstance();
+				IteratorDsk it = facade.getSpecialityList();
+				while(it.hasNext()){
+					MedicalSpecialty ms = (MedicalSpecialty) it.next();
+					if(ms.getCode()==Integer.parseInt(value)){
+						return ms;
+					}
+				}
+			}catch(Exception e){
+				
+			}
 		}
+		return null;
 	}
 
 	@Override
