@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 
 import lib.exceptions.ObjectAlreadyInsertedException;
 import lib.exceptions.ObjectNotFoundException;
 import lib.exceptions.ObjectNotValidException;
 import lib.exceptions.PersistenceMechanismException;
 import lib.exceptions.RepositoryException;
+import lib.exceptions.TransactionException;
+import lib.exceptions.UpdateEntryException;
 import lib.persistence.IPersistenceMechanism;
 import lib.persistence.PersistenceMechanism;
 import lib.util.ConcreteIterator;
@@ -20,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.cin.ufpe.healthwatcher.business.HealthWatcherFacade;
-import br.cin.ufpe.healthwatcher.business.employee.EmployeeLogin;
 import br.cin.ufpe.healthwatcher.data.IComplaintRepository;
 import br.cin.ufpe.healthwatcher.model.complaint.Complaint;
 import br.cin.ufpe.healthwatcher.model.complaint.FoodComplaint;
@@ -49,17 +52,17 @@ public class FoodComplaintRepositoryRDB implements Serializable, IComplaintRepos
 			e1.printStackTrace();
 		}
 		
-		if(fachada!=null){
-			EmployeeLogin employeeLogin = fachada.getfCid().getEmployeeLogin();
-			if(employeeLogin!=null && employeeLogin.isLogged()){
-				Employee e;
-				try {
-					e = fachada.searchEmployee(employeeLogin.getLogin());
-					foodComplaint.setAtendente(e);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		Employee employee = null;
+		try {
+			String login = (String) session.getAttribute("login");
+			employee = fachada.searchEmployee(login);
+			if(employee!=null){
+				foodComplaint.setAtendente(employee);
+			}			
+		} catch (TransactionException | ObjectNotFoundException
+				| UpdateEntryException e1) {
+			e1.printStackTrace();
 		}
 		
 		log.info("Registrando foodComplaint sobre " + foodComplaint.getDescricao());

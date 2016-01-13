@@ -8,13 +8,14 @@
    	  <h1>Food Complaint</h1>
    	  
    	  <h:form method="post">
-   	  	<h:messages id="messages" styleClass="messages" />
+   	  	<h:messages id="messages" styleClass="messages" globalOnly="true" />
    	  	<p>Complaint Description</p>
-   	  	<h:inputTextarea id="complaintDescription" value="#{facade.fCid.foodComplaintRecord.foodComplaint.descricao}" rows="4" cols="50">
+   	  	<h:inputTextarea id="complaintDescription" value="#{facade.fCid.foodComplaintRecord.foodComplaint.descricao}" rows="4" cols="50" requiredMessage="Complaint description required." >
    	  		<f:validateRequired/>
    	  		<f:validateLength minimum="1" maximum="200" />
    	  	</h:inputTextarea>
-
+   	  	<h:message for="complaintDescription" styleClass="messages" />
+   	  	
    	  	<p>Observations</p>
    	  	<h:inputTextarea id="Observations" value="#{facade.fCid.foodComplaintRecord.foodComplaint.observacao}" rows="2" cols="50">
    	  		<f:validateLength maximum="200"/>
@@ -22,10 +23,11 @@
    	  	
    	  	<h3>Complainer Data</h3>
 		<p>Complainer name:
-		   <h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.solicitante}">
+		   <h:inputText id="complainerName" value="#{facade.fCid.foodComplaintRecord.foodComplaint.solicitante}" requiredMessage="Complainer name required.">
 			<f:validateRequired/>
 			<f:validateLength minimum="1" maximum="100" />
 		   </h:inputText>
+		   <h:message for="complainerName" styleClass="messages" />
 		</p>
 		<div>
 			Address: 
@@ -47,16 +49,18 @@
 		
 		<p>
 			City:
-			<h:inputText id="complainerCity" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.city}">
+			<h:inputText id="complainerCity" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.city}" requiredMessage="Complainer city required." >
 				<f:validateRequired/>
 				<f:validateLength maximum="100" />
 			</h:inputText>
+			<h:message for="complainerCity" styleClass="messages" />
 			
 			State:
-			<h:inputText id="complaintState" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.state}">
+			<h:inputText id="complainerState" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.state}" requiredMessage="Complainer state required.">
 				<f:validateRequired/>
 				<f:validateLength maximum="100" />
 			</h:inputText>
+			<h:message for="complainerState" styleClass="messages" />
 			
 			ZIP Code:
 			<h:inputText id="complainerZipCode" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoSolicitante.zip}">
@@ -79,10 +83,11 @@
 		<h3>Victim Information</h3>
 		<p>
 			Name:
-			<h:inputText id="victimName" value="#{facade.fCid.foodComplaintRecord.foodComplaint.nomeVitima}">
+			<h:inputText id="victimName" value="#{facade.fCid.foodComplaintRecord.foodComplaint.nomeVitima}" requiredMessage="Victim name required.">
 				<f:validateRequired/>
 				<f:validateLength minimum="1" maximum="100"/>
 			</h:inputText>
+			<h:message for="complainerState" styleClass="messages" />
 		</p>
 		<p>
 			Address:
@@ -103,16 +108,18 @@
 		</p>
 		<p>
 			Closest City:
-			<h:inputText id="victimCity" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.city}">
+			<h:inputText id="victimCity" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.city}" requiredMessage="Victim city required.">
 				<f:validateRequired/>
 				<f:validateLength minimum="1" maximum="100"/>
 			</h:inputText>
+			<h:message for="victimCity" styleClass="messages" />
 			
 			State:
-			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.state}">
+			<h:inputText id="victimState" value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.state}" requiredMessage="Victim state required.">
 				<f:validateRequired/>
 				<f:validateLength minimum="1" maximum="100"/>
 			</h:inputText>
+			<h:message for="victimState" styleClass="messages" />
 			
 			ZIP Code:
 			<h:inputText value="#{facade.fCid.foodComplaintRecord.foodComplaint.enderecoDoente.zip}">
@@ -151,16 +158,18 @@
    	  	</p>
    	  	<p>
    	  		Place of medical care:
-   	  		<h:inputText id="localAtendimento" value="#{facade.fCid.foodComplaintRecord.foodComplaint.localAtendimento}">
+   	  		<h:inputText id="localAtendimento" value="#{facade.fCid.foodComplaintRecord.foodComplaint.localAtendimento}" requiredMessage="Place required.">
    	  			<f:validateRequired/>
    	  			<f:validateLength minimum="1" maximum="100" />
    	  		</h:inputText>
+   	  		<h:message for="localAtendimento" styleClass="messages" />
    	  		
    	  		Suspicous meal:
-   	  		<h:inputText id="refeicaoSuspeita" value="#{facade.fCid.foodComplaintRecord.foodComplaint.refeicaoSuspeita}">
+   	  		<h:inputText id="refeicaoSuspeita" value="#{facade.fCid.foodComplaintRecord.foodComplaint.refeicaoSuspeita}" requiredMessage="Suspecious meal required.">
 	   	  		<f:validateRequired/>
 	   	  		<f:validateLength minimum="1" maximum="100" />
-	   	  	</h:inputText>   	  		
+	   	  	</h:inputText>
+	   	  	<h:message for="refeicaoSuspeita" styleClass="messages" />   	  		
    	  	</p>
    	  	
 		<h:commandButton style="margin: 10px;" value="Insert" action="#{facade.fCid.foodComplaintRecord.salvar()}" />
